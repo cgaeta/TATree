@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Test</title>
+  <script type="text/javascript" src="js/d3.js"></script>
+  <script type="text/javascript" src="data.json"></script>
+  <style>
+    .link {
+      fill: none;
+      stroke: #888888;
+    }
+    
+    .hidden {
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <script type="text/javascript">
+    
+    var z = 0;
+    
+    var tree = d3.layout.tree()
+    .sort(null)
+    .size([4000, 480])
+    .children(function(d){
+      return(!d.children || d.children.length === 0) ? null : d.children;
+    });
+    
+    var link = d3.svg.diagonal()
+    .projection(function(d){
+      return [d.y, d.x];
+    });
+    
+    var layoutRoot = d3.select("body")
+    .append("svg:svg")
+    .attr("width", 1600)
+    .attr("height", 4000)
+    .append("svg:g")
+    .attr("class", "container")
+    .attr("transform", "translate(60, 0)");
+    
+    function update(source) {
+
+      var nodes = tree.nodes(data);
+      var links = tree.links(nodes);
+
+      layoutRoot.selectAll("path.link")
+      .data(links)
+      .enter()
+      .append("svg:path")
+      .attr("class", "link")
+      .attr("d", link);
+
+      var node = layoutRoot.selectAll("g.node")
+      .data(nodes, function(d){
+        return d.id || (d.id = ++z);
+      });
+      
+      /*
+      var nodeGroup = layoutRoot.selectAll("g.node")
+      .data(nodes)
+      .enter()
+      .append("svg:g")
+      .attr("class", "node")
+      .attr("transform", function(d){
+        return "translate("+d.y+","+d.x+")";
+      })
+      .on('click', function(d){
+        hideChildren(d);
+      });
+      */
+      
+      var nodeGroup = node.enter().append("svg:g")
+      .attr("class", "node")
+      .attr("transform", function(d){
+        return "translate("+d.y+","+d.x+")";
+      })
+      .on('click', function(d){
+        hideChildren(d);
+      });
+            
+      nodeGroup.append("svg:circle")
+      .attr("class", "node-dot")
+      .attr("r", 5);
+      
+      nodeGroup.append("svg:text")
+      .attr("text-anchor", function(d){
+        return d.children ? "end" : "start";
+      })
+      .attr("dx", function(d){
+        var gap = 20;
+        return d.children ? -gap : gap;
+      })
+      .attr("dy", function(d){
+        return (d.parent && d.children) ? -15 : 3;
+      })
+      .text(function(d){
+        return d.name;
+      });
+      
+      var nodeUpdate = node.transition()
+      .duration(300)
+      .attr("transform", function(d){
+        return "translate(" + d.y + "," + d.x + ")";
+      });
+      
+      nodeUpdate.select("circle")
+      .attr("r", 4.5);
+      
+      nodeUpdate.select("text")
+      .style("fill-opacity", 1);
+      
+      var nodeExit = node.exit().transition()
+      .duration(300)
+      .attr("style", "hidden")
+      .remove();
+
+      nodeExit.select("circle")
+        .attr("r", 1e-6);
+      
+      nodeExit.select("text")
+        .style("fill-opacity", 1e-6);
+      
+      var nuLink = layoutRoot.selectAll("path.link")
+      .data(tree.links(nodes), function(d){
+        return d.target.id;
+      });
+      
+      nuLink.enter().insert("svg:path", "g")
+      .attr("class", "link")
+      .attr("d", function(d){
+        var o = {x: source.x0, y: source.y0};
+        return link({source: o, target: o});
+      })
+      .transition()
+      .duration(300)
+      .attr("d", link);
+      
+      nuLink.transition()
+      .duration(300)
+      .attr("d", link);
+      
+      nuLink.exit().transition()
+      .duration(300)
+      .attr("d", function(d){
+        var o = {x: source.x, y: source.y};
+      })
+      .remove();
+      
+      
+      
+      nodes.forEach(function(d){
+        d.x0 = d.x;
+        d.y0 = d.y;
+      });
+      
+    }
+    
+    function hideChildren(d){
+      if(d.children){
+        d._children = d.children;
+        d.children = null;
+      }
+      else{
+        d.children = d._children;
+        d._children = null;
+      }
+      
+      update(d);
+            
+    }
+    
+    (function(){
+      update(data);
+    })();
+  </script>
+</body>
+</html>
