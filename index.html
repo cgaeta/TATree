@@ -7,14 +7,15 @@
   <style>
     #view {
       margin: 20px auto;
-      width: 80%;
-      height: 600px;
+      width: 90%;
+      height: 640px;
       overflow: auto;
     }
     
     #json {
       white-space: pre;
       height: 80px;
+			overflow: auto;
     }
     
     .link {
@@ -68,33 +69,53 @@
     
     var z = 0;
     var total = 0;
+		var nodeDepths = [];
+		var strLen = 0;
     
     var dragging = null;
     var selected = null;
+		
+		var dragStEvent = null;
     
     var dragListener = d3.behavior.drag()
       .on("dragstart", function(d){
         if(d.parent == null) return;
+				dragStEvent = d3.event;
       })
       .on("drag", function(d){
         if(d.parent == null) return;
-        //console.log("dragging..");
         d.x0 += d3.event.dy;
         d.y0 += d3.event.dx;
         var n = d3.select(this);
         n.attr("transform", "translate("+d.y0+","+d.x0+")");
       })
       .on("dragend", function(d){
-        if(matchTest(selected)){
+        if((matchTest(selected) || selected === null)){
+						
           dragging = null;
-          hideChildren(selected);
-          d3.select(this).classed("collapsedParent", d._children);
-          update(selected);
+					
+					var delta = {};
+					delta.x = Math.abs(d3.event.sourceEvent.clientX - dragStEvent.sourceEvent.clientX),
+						delta.y = Math.abs(d3.event.sourceEvent.clientY - dragStEvent.sourceEvent.clientY);
+										
+					if(delta.x < 5 && delta.y < 5){
+						hideChildren(d);
+          	d3.select(this).classed("collapsedParent", d._children);
+					}
+					
+					update(d);
+					dragStEvent = null;
+					selected = null;
+					
+					return;
         }
         else{
           endDrag(selected);
           update(data);
+															
+					return;
         }
+				
       });
     
     var tree = d3.layout.tree()
@@ -102,7 +123,13 @@
       .size([4000, 480])
       .children(function(d){
         return(!d.children || d.children.length === 0) ? null : d.children;
-      });
+      })
+			.separation(function(a, b){
+				if(!(hasChildren(a) || hasChildren(b)))
+					return a.parent === b.parent ? 1 : 2;
+				else
+					return a.parent === b.parent ? 3 : 4;
+			});
     
     var link = d3.svg.diagonal()
       .projection(function(d){
@@ -120,7 +147,20 @@
     function update(source) {
       
       var h = 0;
+			nodeDepths = [];
+			depthCounts(data);
       total = countChildren(data);
+			
+			var newHeight = d3.max(nodeDepths) * 40;
+			newHeight = Math.max(newHeight, 640);
+			
+			var newWidth = strLen * nodeDepths.length;
+			
+			tree = tree.size([newHeight, newWidth]);
+			
+			var svgCanvas = document.getElementById("view").firstChild
+			svgCanvas.setAttribute("height", newHeight);
+			svgCanvas.setAttribute("width", newWidth * 2);
 
       var nodes = tree.nodes(data);
       var links = tree.links(nodes);
@@ -187,8 +227,8 @@
           else
             d.count = 0;
                 
-        d.x = 20 + 20 * h++;
-        d.y = 80 * d.depth;
+        //d.x = 20 + 20 * h++;
+        //d.y = 80 * d.depth;
         
         if(total > 0)
           h += d.count / total * 5;
@@ -265,8 +305,13 @@
       document.getElementById("json").innerHTML = JSON.stringify(getJSON(data), null, 4);
       
     }
+		
+		function hasChildren(d){
+			return (true && d.children || d._children);
+		}
     
     function hideChildren(d){
+			if(!d) return;
       if(d.children){
         d._children = d.children;
         d.children = null;
@@ -316,6 +361,29 @@
         return 1;
       
     }
+		
+		function depthCounts(d, l){
+			
+			if(!l)
+				l = 0;
+			
+			strLen = Math.max(strLen, d.name.length);
+			
+			if(!nodeDepths[l])
+				nodeDepths[l] = 1;
+			
+			else
+				nodeDepths[l] += 1;
+			
+			var ch = d.children;
+			
+			if(ch){
+				for(var i = 0; i < ch.length; i++){
+					depthCounts(ch[i], l+1);
+				}
+			}
+			
+		}
     
     function startDrag(d){
       dragging = d;
@@ -340,7 +408,6 @@
       dragging.parent = d;
       
       if(d._children){
-        //hideChildren(d);
         d._children.push(dragging);
       }
       else{
@@ -349,6 +416,9 @@
 
         d.children.push(dragging);
       }
+			
+			selected = null;
+			
     }
     
     function removeNode(d){
@@ -408,6 +478,8 @@
         fr.onload = function(){
           data = JSON.parse(fr.result);
           update(data);
+					console.log(data);
+					t.value = "";
         }
         fr.readAsText(files[0]);
       }
