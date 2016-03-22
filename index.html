@@ -6,16 +6,25 @@
   <script type="text/javascript" src="js/d3.js"></script>
   <style>
     #view {
-      margin: 20px auto;
-      width: 90%;
+      margin: 20px 0 20px 5%;
+      width: 40%;
       height: 640px;
       overflow: auto;
+      display: inline-block;
+    }
+    
+    #script {
+      margin: 20px 5% 20px 0;
+      width: 40%;
+      max-height: 640px;
+      overflow-y: scroll;
+      display: inline-block;
     }
     
     #json {
       white-space: pre;
       height: 80px;
-			overflow: auto;
+      overflow: auto;
     }
     
     .link {
@@ -54,33 +63,40 @@
 <body>
   <label>JSON file to analyze:</label>
   <input type="file" id="fileField" />
-  
+  <label>Add transcript</label>
+  <input type="file" id="transcriptField" />
+  <button id="showTranscript">Show next transcript</button>
+  <button id="encodeSelection">Encode selection</button>
   <form>
     <label>Add node</label>
     <input type="text" id="nodeField" />
     <input type="submit" value="Insert" id="insertNode" />
   </form>
   <div id="view"></div>
+  <div id="script"></div>
   <label>Click below to copy JSON</label>
   <p id="json"></p>
   <script type="text/javascript">
     
     var data = null;
+    var transcripts = [];
+    
+    var currTransc = 0;
     
     var z = 0;
     var total = 0;
-		var nodeDepths = [];
-		var strLen = 0;
+    var nodeDepths = [];
+    var strLen = 0;
     
     var dragging = null;
     var selected = null;
-		
-		var dragStEvent = null;
+    
+    var dragStEvent = null;
     
     var dragListener = d3.behavior.drag()
       .on("dragstart", function(d){
         if(d.parent == null) return;
-				dragStEvent = d3.event;
+        dragStEvent = d3.event;
       })
       .on("drag", function(d){
         if(d.parent == null) return;
@@ -91,31 +107,31 @@
       })
       .on("dragend", function(d){
         if((matchTest(selected) || selected === null)){
-						
+            
           dragging = null;
-					
-					var delta = {};
-					delta.x = Math.abs(d3.event.sourceEvent.clientX - dragStEvent.sourceEvent.clientX),
-						delta.y = Math.abs(d3.event.sourceEvent.clientY - dragStEvent.sourceEvent.clientY);
-										
-					if(delta.x < 5 && delta.y < 5){
-						hideChildren(d);
+          
+          var delta = {};
+          delta.x = Math.abs(d3.event.sourceEvent.clientX - dragStEvent.sourceEvent.clientX),
+            delta.y = Math.abs(d3.event.sourceEvent.clientY - dragStEvent.sourceEvent.clientY);
+                    
+          if(delta.x < 5 && delta.y < 5){
+            hideChildren(d);
           	d3.select(this).classed("collapsedParent", d._children);
-					}
-					
-					update(d);
-					dragStEvent = null;
-					selected = null;
-					
-					return;
+          }
+          
+          update(d);
+          dragStEvent = null;
+          selected = null;
+          
+          return;
         }
         else{
           endDrag(selected);
           update(data);
-															
-					return;
+                              
+          return;
         }
-				
+        
       });
     
     var tree = d3.layout.tree()
@@ -124,12 +140,12 @@
       .children(function(d){
         return(!d.children || d.children.length === 0) ? null : d.children;
       })
-			.separation(function(a, b){
-				if(!(hasChildren(a) || hasChildren(b)))
-					return a.parent === b.parent ? 1 : 2;
-				else
-					return a.parent === b.parent ? 3 : 4;
-			});
+      .separation(function(a, b){
+        if(!(hasChildren(a) || hasChildren(b)))
+          return a.parent === b.parent ? 1 : 2;
+        else
+          return a.parent === b.parent ? 3 : 4;
+      });
     
     var link = d3.svg.diagonal()
       .projection(function(d){
@@ -146,21 +162,31 @@
     
     function update(source) {
       
+      if(source == null && localStorage.data){
+        source = JSON.parse(localStorage.getItem("data"));
+      
+        if(source.transcripts)
+          transcripts = source.transcripts;
+      }
+      else if(source == null) return;
+      
+      data = source;
+      
       var h = 0;
-			nodeDepths = [];
-			depthCounts(data);
+      nodeDepths = [];
+      depthCounts(data);
       total = countChildren(data);
-			
-			var newHeight = d3.max(nodeDepths) * 40;
-			newHeight = Math.max(newHeight, 640);
-			
-			var newWidth = strLen * nodeDepths.length;
-			
-			tree = tree.size([newHeight, newWidth]);
-			
-			var svgCanvas = document.getElementById("view").firstChild
-			svgCanvas.setAttribute("height", newHeight);
-			svgCanvas.setAttribute("width", newWidth * 2);
+      
+      var newHeight = d3.max(nodeDepths) * 40;
+      newHeight = Math.max(newHeight, 640);
+      
+      var newWidth = Math.max(strLen * nodeDepths.length, 800);
+      
+      tree = tree.size([newHeight, newWidth]);
+      
+      var svgCanvas = document.getElementById("view").firstChild
+      svgCanvas.setAttribute("height", newHeight);
+      svgCanvas.setAttribute("width", newWidth * 2);
 
       var nodes = tree.nodes(data);
       var links = tree.links(nodes);
@@ -303,15 +329,16 @@
       });
       
       document.getElementById("json").innerHTML = JSON.stringify(getJSON(data), null, 4);
+      localStorage.setItem("data", JSON.stringify(getJSON(data)));
       
     }
-		
-		function hasChildren(d){
-			return (true && d.children || d._children);
-		}
+    
+    function hasChildren(d){
+      return (true && d.children || d._children);
+    }
     
     function hideChildren(d){
-			if(!d) return;
+      if(!d) return;
       if(d.children){
         d._children = d.children;
         d.children = null;
@@ -324,6 +351,8 @@
     }
     
     function countChildren(d){
+      
+      if(d == null) return 0;
       
       var c = 0;
       
@@ -361,29 +390,32 @@
         return 1;
       
     }
-		
-		function depthCounts(d, l){
-			
-			if(!l)
-				l = 0;
-			
-			strLen = Math.max(strLen, d.name.length);
-			
-			if(!nodeDepths[l])
-				nodeDepths[l] = 1;
-			
-			else
-				nodeDepths[l] += 1;
-			
-			var ch = d.children;
-			
-			if(ch){
-				for(var i = 0; i < ch.length; i++){
-					depthCounts(ch[i], l+1);
-				}
-			}
-			
-		}
+    
+    function depthCounts(d, l){
+      
+      if(d == null)
+        return 0;
+      
+      if(!l)
+        l = 0;
+      
+      strLen = Math.max(strLen, d.name.length);
+      
+      if(!nodeDepths[l])
+        nodeDepths[l] = 1;
+      
+      else
+        nodeDepths[l] += 1;
+      
+      var ch = d.children;
+      
+      if(ch){
+        for(var i = 0; i < ch.length; i++){
+          depthCounts(ch[i], l+1);
+        }
+      }
+      
+    }
     
     function startDrag(d){
       dragging = d;
@@ -416,9 +448,9 @@
 
         d.children.push(dragging);
       }
-			
-			selected = null;
-			
+      
+      selected = null;
+      
     }
     
     function removeNode(d){
@@ -444,6 +476,14 @@
       
     }
     
+    function countPrev(t){
+      console.log(t, t.previousSibling);
+      if(t.previousSibling)
+        return countPrev(t.previousSibling) + 1;
+      else
+        return 0;
+    }
+    
     function matchTest(d){
       var result = dragging === d;
       return result;
@@ -452,7 +492,8 @@
     function getJSON(d){
       var ob = {
         "name": d.name,
-        "children" : []
+        "children" : [],
+        "transcripts": transcripts
       };
       
       if(d.children)
@@ -478,16 +519,86 @@
         fr.onload = function(){
           data = JSON.parse(fr.result);
           update(data);
-					console.log(data);
-					t.value = "";
+          console.log(data);
+          t.value = "";
         }
         fr.readAsText(files[0]);
       }
     }
     
+    function uploadTranscript(e){
+      var t = e.target || window.event.srcElement;
+      var files = t.files;
+      
+      if(FileReader && files && files.length){
+        var fr = new FileReader();
+        fr.onload = function(){
+          transcript = fr.result;
+          transcripts.push(transcript);
+          //update(data);
+          //console.log(data);
+          t.value = "";
+          update(data || {name:"codes", children:{}});
+        }
+        fr.readAsText(files[0]);
+      }
+    }
+    
+    function showTranscript(){
+      if(transcripts.length < 1)
+        return;
+      
+      currTransc++;
+            
+      if(currTransc > transcripts.length - 1)
+        currTransc = 0;
+            
+      var para = transcripts[currTransc].split("\r\n");
+      
+      var scr = document.querySelector("#script");
+      while(scr.firstChild)
+        scr.removeChild(scr.firstChild);
+      
+      for(var i = 0; i < para.length; i++){
+        var p = document.createElement("br");
+        scr.appendChild(document.createTextNode(para[i]));
+        scr.appendChild(p);
+      }
+    }
+    
+    function encodeSelection(){
+      var text = "";
+      if(window.getSelection){
+        text = window.getSelection().getRangeAt(0);
+      }
+      else if(document.selection && document.selection.type != "Control"){
+        text = document.selection.createRange();
+      }
+      
+      console.log(text);
+      var selection = {
+        text: text.toString(),
+        transcript: currTransc,
+        el: countPrev(text.startContainer)
+      }
+      console.log(selection);
+    }
+    
     (function(){
       document.getElementById("fileField").addEventListener("change", function(e){
         uploadJSON(e);
+      });
+      
+      document.getElementById("transcriptField").addEventListener("change", function(e){
+        uploadTranscript(e);
+      });
+      
+      document.getElementById("showTranscript").addEventListener("click", function(e){
+        showTranscript();
+      });
+      
+      document.getElementById("encodeSelection").addEventListener("click", function(e){
+        encodeSelection();
       });
       
       document.getElementById("insertNode").addEventListener("click", function(e){
@@ -521,6 +632,8 @@
         selection.removeAllRanges();
         selection.addRange(range);
       });
+      
+      update();
     })();
   </script>
 </body>
