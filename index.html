@@ -58,6 +58,10 @@
     .node-dot {
       r: 5;
     }
+		
+		.highlighted {
+			stroke
+		}
   </style>
 </head>
 <body>
@@ -90,6 +94,7 @@
     
     var dragging = null;
     var selected = null;
+		var highlighted = null;
     
     var dragStEvent = null;
     
@@ -106,26 +111,46 @@
         n.attr("transform", "translate("+d.y0+","+d.x0+")");
       })
       .on("dragend", function(d){
+				if(dragStEvent == null) return;
+								
+				// simply clicked on a node?
         if((matchTest(selected) || selected === null)){
             
           dragging = null;
           
           var delta = {};
+										
           delta.x = Math.abs(d3.event.sourceEvent.clientX - dragStEvent.sourceEvent.clientX),
             delta.y = Math.abs(d3.event.sourceEvent.clientY - dragStEvent.sourceEvent.clientY);
-                    
+					
+					// clicked near origin - treat event as just a click
           if(delta.x < 5 && delta.y < 5){
-            hideChildren(d);
-          	d3.select(this).classed("collapsedParent", d._children);
+						if(this !== highlighted){
+							if(highlighted != null){
+								d3.select(highlighted)
+									.attr("fill", "#000000");
+							}
+								//d3.select(highlighted).classed("highlighted", false);
+							highlighted = this;
+							d3.select(this)
+								.attr("fill", "#4499FF");
+							
+						}
+						else{
+            	hideChildren(d);
+          		d3.select(this).classed("collapsedParent", d._children);
+						}
           }
           
-          update(d);
+          //update(d);
+					update(data);
           dragStEvent = null;
           selected = null;
           
           return;
         }
         else{
+					
           endDrag(selected);
           update(data);
                               
@@ -160,6 +185,9 @@
     .attr("class", "container")
     .attr("transform", "translate(60, 0)");
     
+		/*
+			draw node hierarchy
+		*/
     function update(source) {
       
       if(source == null && localStorage.data){
@@ -167,6 +195,9 @@
       
         if(source.transcripts)
           transcripts = source.transcripts;
+				
+				if(source.data)
+					source = source.data;
       }
       else if(source == null) return;
       
@@ -192,11 +223,11 @@
       var links = tree.links(nodes);
       
       layoutRoot.selectAll("path.link")
-      .data(links)
-      .enter()
-      .append("svg:path")
-      .attr("class", "link")
-      .attr("d", link);
+				.data(links)
+				.enter()
+				.append("svg:path")
+				.attr("class", "link")
+				.attr("d", link);
 
       var node = layoutRoot.selectAll("g.node")
         .data(nodes, function(d){
@@ -328,15 +359,23 @@
         d.y0 = d.y;
       });
       
-      document.getElementById("json").innerHTML = JSON.stringify(getJSON(data), null, 4);
-      localStorage.setItem("data", JSON.stringify(getJSON(data)));
+			var saveData = {data: getJSON(data), transcripts: transcripts};
+			
+      document.getElementById("json").innerHTML = JSON.stringify(saveData, null, 4);
+      localStorage.setItem("data", JSON.stringify(saveData));
       
     }
     
+		/*
+			return whether the node has children
+		*/
     function hasChildren(d){
       return (true && d.children || d._children);
     }
     
+		/*
+			hide the nodes children
+		*/
     function hideChildren(d){
       if(!d) return;
       if(d.children){
@@ -350,6 +389,9 @@
             
     }
     
+		/*
+			count the node's children
+		*/
     function countChildren(d){
       
       if(d == null) return 0;
@@ -398,7 +440,7 @@
       
       if(!l)
         l = 0;
-      
+      			
       strLen = Math.max(strLen, d.name.length);
       
       if(!nodeDepths[l])
@@ -427,6 +469,7 @@
     }
     
     function endDrag(d){
+						
       if(!d){
         return;
       }
@@ -435,7 +478,7 @@
         console.log("Error: cannot move node to descendant node");
         return;
       }
-      
+      			
       removeNode(dragging);
       dragging.parent = d;
       
@@ -477,7 +520,6 @@
     }
     
     function countPrev(t){
-      console.log(t, t.previousSibling);
       if(t.previousSibling)
         return countPrev(t.previousSibling) + 1;
       else
@@ -492,9 +534,17 @@
     function getJSON(d){
       var ob = {
         "name": d.name,
-        "children" : [],
-        "transcripts": transcripts
+        "children" : []
       };
+			
+			console.log(d);
+			
+			if(d.transcript != null){
+				ob.transcript = d.transcript;
+				ob.el = d.el;
+				ob.start = d.start;
+				ob.end = d.end;
+			}
       
       if(d.children)
         for(var i = 0; i < d.children.length; i++){
@@ -519,7 +569,6 @@
         fr.onload = function(){
           data = JSON.parse(fr.result);
           update(data);
-          console.log(data);
           t.value = "";
         }
         fr.readAsText(files[0]);
@@ -536,7 +585,6 @@
           transcript = fr.result;
           transcripts.push(transcript);
           //update(data);
-          //console.log(data);
           t.value = "";
           update(data || {name:"codes", children:{}});
         }
@@ -553,7 +601,7 @@
       if(currTransc > transcripts.length - 1)
         currTransc = 0;
             
-      var para = transcripts[currTransc].split("\r\n");
+      var para = transcripts[currTransc].split("\n");
       
       var scr = document.querySelector("#script");
       while(scr.firstChild)
@@ -575,14 +623,32 @@
         text = document.selection.createRange();
       }
       
-      console.log(text);
       var selection = {
-        text: text.toString(),
+        name: text.toString(),
+				children: [],
         transcript: currTransc,
-        el: countPrev(text.startContainer)
+        el: countPrev(text.startContainer),
+				start: text.startOffset,
+				end: text.endOffset
       }
-      console.log(selection);
+			if(highlighted != null)
+				addNode(d3.select(highlighted).data()[0], selection);
+			else
+				addNode(data, selection);
     }
+		
+		function addNode(parent, node){
+			if(parent){
+				if(!parent.hasOwnProperty('children'))
+					parent.children = [];
+							
+				parent.children.push(node);
+			}
+			else
+				parent = node;
+			
+			update(data);
+		}
     
     (function(){
       document.getElementById("fileField").addEventListener("change", function(e){
@@ -612,16 +678,10 @@
             "children": []
           };
           
-          if(data){
-            if(!data.children)
-              data.children = [];
-          
-            data.children.push(o);
-          }
-          else
-            data = o;
-          
-          update(data);
+					if(highlighted != null)
+						addNode(d3.select(highlighted).data()[0], o);
+					else
+						addNode(data, o);
         }
       });
       
