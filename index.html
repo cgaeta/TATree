@@ -32,6 +32,10 @@
       stroke: #888888;
     }
     
+    .highlightText {
+      background-color: rgba(255, 255, 0, .7);
+    }
+    
     .hidden {
       opacity: 0;
     }
@@ -58,10 +62,7 @@
     .node-dot {
       r: 5;
     }
-		
-		.highlighted {
-			stroke
-		}
+    
   </style>
 </head>
 <body>
@@ -94,7 +95,7 @@
     
     var dragging = null;
     var selected = null;
-		var highlighted = null;
+    var highlighted = null;
     
     var dragStEvent = null;
     
@@ -111,46 +112,46 @@
         n.attr("transform", "translate("+d.y0+","+d.x0+")");
       })
       .on("dragend", function(d){
-				if(dragStEvent == null) return;
-								
-				// simply clicked on a node?
+        if(dragStEvent == null) return;
+                
+        // simply clicked on a node?
         if((matchTest(selected) || selected === null)){
             
           dragging = null;
           
           var delta = {};
-										
+                    
           delta.x = Math.abs(d3.event.sourceEvent.clientX - dragStEvent.sourceEvent.clientX),
             delta.y = Math.abs(d3.event.sourceEvent.clientY - dragStEvent.sourceEvent.clientY);
-					
-					// clicked near origin - treat event as just a click
+          
+          // clicked near origin - treat event as just a click
           if(delta.x < 5 && delta.y < 5){
-						if(this !== highlighted){
-							if(highlighted != null){
-								d3.select(highlighted)
-									.attr("fill", "#000000");
-							}
-								//d3.select(highlighted).classed("highlighted", false);
-							highlighted = this;
-							d3.select(this)
-								.attr("fill", "#4499FF");
-							
-						}
-						else{
+            if(this !== highlighted){
+              if(highlighted != null){
+                d3.select(highlighted)
+                  .attr("fill", "#000000");
+              }
+                //d3.select(highlighted).classed("highlighted", false);
+              highlighted = this;
+              d3.select(this)
+                .attr("fill", "#4499FF");
+              
+            }
+            else{
             	hideChildren(d);
           		d3.select(this).classed("collapsedParent", d._children);
-						}
+            }
           }
           
           //update(d);
-					update(data);
+          update(data);
           dragStEvent = null;
           selected = null;
           
           return;
         }
         else{
-					
+          
           endDrag(selected);
           update(data);
                               
@@ -185,9 +186,9 @@
     .attr("class", "container")
     .attr("transform", "translate(60, 0)");
     
-		/*
-			draw node hierarchy
-		*/
+    /*
+      draw node hierarchy
+    */
     function update(source) {
       
       if(source == null && localStorage.data){
@@ -195,9 +196,9 @@
       
         if(source.transcripts)
           transcripts = source.transcripts;
-				
-				if(source.data)
-					source = source.data;
+        
+        if(source.data)
+          source = source.data;
       }
       else if(source == null) return;
       
@@ -223,11 +224,11 @@
       var links = tree.links(nodes);
       
       layoutRoot.selectAll("path.link")
-				.data(links)
-				.enter()
-				.append("svg:path")
-				.attr("class", "link")
-				.attr("d", link);
+        .data(links)
+        .enter()
+        .append("svg:path")
+        .attr("class", "link")
+        .attr("d", link);
 
       var node = layoutRoot.selectAll("g.node")
         .data(nodes, function(d){
@@ -359,23 +360,23 @@
         d.y0 = d.y;
       });
       
-			var saveData = {data: getJSON(data), transcripts: transcripts};
-			
+      var saveData = {data: getJSON(data), transcripts: transcripts};
+      
       document.getElementById("json").innerHTML = JSON.stringify(saveData, null, 4);
       localStorage.setItem("data", JSON.stringify(saveData));
       
     }
     
-		/*
-			return whether the node has children
-		*/
+    /*
+      return whether the node has children
+    */
     function hasChildren(d){
       return (true && d.children || d._children);
     }
     
-		/*
-			hide the nodes children
-		*/
+    /*
+      hide the nodes children
+    */
     function hideChildren(d){
       if(!d) return;
       if(d.children){
@@ -389,9 +390,20 @@
             
     }
     
-		/*
-			count the node's children
-		*/
+    function iterateNodes(d, fn){
+      
+      var c = d.children || d._children;
+            
+      if(c != null || c != undefined)
+        for(var i = 0; i < c.length; i++)
+          iterateNodes(c[i], fn);
+      
+      fn(d);
+    }
+    
+    /*
+      count the node's children
+    */
     function countChildren(d){
       
       if(d == null) return 0;
@@ -469,7 +481,7 @@
     }
     
     function endDrag(d){
-						
+            
       if(!d){
         return;
       }
@@ -536,15 +548,13 @@
         "name": d.name,
         "children" : []
       };
-			
-			console.log(d);
-			
-			if(d.transcript != null){
-				ob.transcript = d.transcript;
-				ob.el = d.el;
-				ob.start = d.start;
-				ob.end = d.end;
-			}
+            
+      if(d.transcript != null){
+        ob.transcript = d.transcript;
+        ob.el = d.el;
+        ob.start = d.start;
+        ob.end = d.end;
+      }
       
       if(d.children)
         for(var i = 0; i < d.children.length; i++){
@@ -612,6 +622,23 @@
         scr.appendChild(document.createTextNode(para[i]));
         scr.appendChild(p);
       }
+      
+      iterateNodes(data, function(d){
+        if(d.transcript != currTransc)
+          return;
+        
+        var el = scr.childNodes[d.el];
+        
+        var r = document.createRange();
+        r.setStart(el, d.start);
+        r.setEnd(el, d.end);
+        
+        var sp = document.createElement("span");
+        sp.className = "highlightText";
+        
+        r.surroundContents(sp);
+      });
+      
     }
     
     function encodeSelection(){
@@ -625,30 +652,30 @@
       
       var selection = {
         name: text.toString(),
-				children: [],
+        children: [],
         transcript: currTransc,
         el: countPrev(text.startContainer),
-				start: text.startOffset,
-				end: text.endOffset
+        start: text.startOffset,
+        end: text.endOffset
       }
-			if(highlighted != null)
-				addNode(d3.select(highlighted).data()[0], selection);
-			else
-				addNode(data, selection);
+      if(highlighted != null)
+        addNode(d3.select(highlighted).data()[0], selection);
+      else
+        addNode(data, selection);
     }
-		
-		function addNode(parent, node){
-			if(parent){
-				if(!parent.hasOwnProperty('children'))
-					parent.children = [];
-							
-				parent.children.push(node);
-			}
-			else
-				parent = node;
-			
-			update(data);
-		}
+    
+    function addNode(parent, node){
+      if(parent){
+        if(!parent.hasOwnProperty('children'))
+          parent.children = [];
+              
+        parent.children.push(node);
+      }
+      else
+        parent = node;
+      
+      update(data);
+    }
     
     (function(){
       document.getElementById("fileField").addEventListener("change", function(e){
@@ -678,10 +705,10 @@
             "children": []
           };
           
-					if(highlighted != null)
-						addNode(d3.select(highlighted).data()[0], o);
-					else
-						addNode(data, o);
+          if(highlighted != null)
+            addNode(d3.select(highlighted).data()[0], o);
+          else
+            addNode(data, o);
         }
       });
       
