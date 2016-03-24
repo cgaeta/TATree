@@ -6,21 +6,34 @@
   <script type="text/javascript" src="js/d3.js"></script>
   <style>
     #view {
-      margin: 20px auto;
-      width: 90%;
+      margin: 20px 0 20px 5%;
+      width: 40%;
       height: 640px;
       overflow: auto;
+      display: inline-block;
+    }
+    
+    #script {
+      margin: 20px 5% 20px 0;
+      width: 40%;
+      max-height: 640px;
+      overflow-y: scroll;
+      display: inline-block;
     }
     
     #json {
       white-space: pre;
       height: 80px;
-			overflow: auto;
+      overflow: auto;
     }
     
     .link {
       fill: none;
       stroke: #888888;
+    }
+    
+    .highlightText {
+      background-color: rgba(255, 255, 0, .7);
     }
     
     .hidden {
@@ -49,38 +62,47 @@
     .node-dot {
       r: 5;
     }
+    
   </style>
 </head>
 <body>
   <label>JSON file to analyze:</label>
   <input type="file" id="fileField" />
-  
+  <label>Add transcript</label>
+  <input type="file" id="transcriptField" />
+  <button id="showTranscript">Show next transcript</button>
+  <button id="encodeSelection">Encode selection</button>
   <form>
     <label>Add node</label>
     <input type="text" id="nodeField" />
     <input type="submit" value="Insert" id="insertNode" />
   </form>
   <div id="view"></div>
+  <div id="script"></div>
   <label>Click below to copy JSON</label>
   <p id="json"></p>
   <script type="text/javascript">
     
     var data = null;
+    var transcripts = [];
+    
+    var currTransc = 0;
     
     var z = 0;
     var total = 0;
-		var nodeDepths = [];
-		var strLen = 0;
+    var nodeDepths = [];
+    var strLen = 0;
     
     var dragging = null;
     var selected = null;
-		
-		var dragStEvent = null;
+    var highlighted = null;
+    
+    var dragStEvent = null;
     
     var dragListener = d3.behavior.drag()
       .on("dragstart", function(d){
         if(d.parent == null) return;
-				dragStEvent = d3.event;
+        dragStEvent = d3.event;
       })
       .on("drag", function(d){
         if(d.parent == null) return;
@@ -90,32 +112,52 @@
         n.attr("transform", "translate("+d.y0+","+d.x0+")");
       })
       .on("dragend", function(d){
+        if(dragStEvent == null) return;
+                
+        // simply clicked on a node?
         if((matchTest(selected) || selected === null)){
-						
+            
           dragging = null;
-					
-					var delta = {};
-					delta.x = Math.abs(d3.event.sourceEvent.clientX - dragStEvent.sourceEvent.clientX),
-						delta.y = Math.abs(d3.event.sourceEvent.clientY - dragStEvent.sourceEvent.clientY);
-										
-					if(delta.x < 5 && delta.y < 5){
-						hideChildren(d);
-          	d3.select(this).classed("collapsedParent", d._children);
-					}
-					
-					update(d);
-					dragStEvent = null;
-					selected = null;
-					
-					return;
+          
+          var delta = {};
+                    
+          delta.x = Math.abs(d3.event.sourceEvent.clientX - dragStEvent.sourceEvent.clientX),
+            delta.y = Math.abs(d3.event.sourceEvent.clientY - dragStEvent.sourceEvent.clientY);
+          
+          // clicked near origin - treat event as just a click
+          if(delta.x < 5 && delta.y < 5){
+            if(this !== highlighted){
+              if(highlighted != null){
+                d3.select(highlighted)
+                  .attr("fill", "#000000");
+              }
+                //d3.select(highlighted).classed("highlighted", false);
+              highlighted = this;
+              d3.select(this)
+                .attr("fill", "#4499FF");
+              
+            }
+            else{
+            	hideChildren(d);
+          		d3.select(this).classed("collapsedParent", d._children);
+            }
+          }
+          
+          //update(d);
+          update(data);
+          dragStEvent = null;
+          selected = null;
+          
+          return;
         }
         else{
+          
           endDrag(selected);
           update(data);
-															
-					return;
+                              
+          return;
         }
-				
+        
       });
     
     var tree = d3.layout.tree()
@@ -124,12 +166,12 @@
       .children(function(d){
         return(!d.children || d.children.length === 0) ? null : d.children;
       })
-			.separation(function(a, b){
-				if(!(hasChildren(a) || hasChildren(b)))
-					return a.parent === b.parent ? 1 : 2;
-				else
-					return a.parent === b.parent ? 3 : 4;
-			});
+      .separation(function(a, b){
+        if(!(hasChildren(a) || hasChildren(b)))
+          return a.parent === b.parent ? 1 : 2;
+        else
+          return a.parent === b.parent ? 3 : 4;
+      });
     
     var link = d3.svg.diagonal()
       .projection(function(d){
@@ -144,33 +186,49 @@
     .attr("class", "container")
     .attr("transform", "translate(60, 0)");
     
+    /*
+      draw node hierarchy
+    */
     function update(source) {
       
+      if(source == null && localStorage.data){
+        source = JSON.parse(localStorage.getItem("data"));
+      
+        if(source.transcripts)
+          transcripts = source.transcripts;
+        
+        if(source.data)
+          source = source.data;
+      }
+      else if(source == null) return;
+      
+      data = source;
+      
       var h = 0;
-			nodeDepths = [];
-			depthCounts(data);
+      nodeDepths = [];
+      depthCounts(data);
       total = countChildren(data);
-			
-			var newHeight = d3.max(nodeDepths) * 40;
-			newHeight = Math.max(newHeight, 640);
-			
-			var newWidth = strLen * nodeDepths.length;
-			
-			tree = tree.size([newHeight, newWidth]);
-			
-			var svgCanvas = document.getElementById("view").firstChild
-			svgCanvas.setAttribute("height", newHeight);
-			svgCanvas.setAttribute("width", newWidth * 2);
+      
+      var newHeight = d3.max(nodeDepths) * 40;
+      newHeight = Math.max(newHeight, 640);
+      
+      var newWidth = Math.max(strLen * nodeDepths.length, 800);
+      
+      tree = tree.size([newHeight, newWidth]);
+      
+      var svgCanvas = document.getElementById("view").firstChild
+      svgCanvas.setAttribute("height", newHeight);
+      svgCanvas.setAttribute("width", newWidth * 2);
 
       var nodes = tree.nodes(data);
       var links = tree.links(nodes);
       
       layoutRoot.selectAll("path.link")
-      .data(links)
-      .enter()
-      .append("svg:path")
-      .attr("class", "link")
-      .attr("d", link);
+        .data(links)
+        .enter()
+        .append("svg:path")
+        .attr("class", "link")
+        .attr("d", link);
 
       var node = layoutRoot.selectAll("g.node")
         .data(nodes, function(d){
@@ -302,16 +360,25 @@
         d.y0 = d.y;
       });
       
-      document.getElementById("json").innerHTML = JSON.stringify(getJSON(data), null, 4);
+      var saveData = {data: getJSON(data), transcripts: transcripts};
+      
+      document.getElementById("json").innerHTML = JSON.stringify(saveData, null, 4);
+      localStorage.setItem("data", JSON.stringify(saveData));
       
     }
-		
-		function hasChildren(d){
-			return (true && d.children || d._children);
-		}
     
+    /*
+      return whether the node has children
+    */
+    function hasChildren(d){
+      return (true && d.children || d._children);
+    }
+    
+    /*
+      hide the nodes children
+    */
     function hideChildren(d){
-			if(!d) return;
+      if(!d) return;
       if(d.children){
         d._children = d.children;
         d.children = null;
@@ -323,7 +390,23 @@
             
     }
     
+    function iterateNodes(d, fn){
+      
+      var c = d.children || d._children;
+            
+      if(c != null || c != undefined)
+        for(var i = 0; i < c.length; i++)
+          iterateNodes(c[i], fn);
+      
+      fn(d);
+    }
+    
+    /*
+      count the node's children
+    */
     function countChildren(d){
+      
+      if(d == null) return 0;
       
       var c = 0;
       
@@ -361,29 +444,32 @@
         return 1;
       
     }
-		
-		function depthCounts(d, l){
-			
-			if(!l)
-				l = 0;
-			
-			strLen = Math.max(strLen, d.name.length);
-			
-			if(!nodeDepths[l])
-				nodeDepths[l] = 1;
-			
-			else
-				nodeDepths[l] += 1;
-			
-			var ch = d.children;
-			
-			if(ch){
-				for(var i = 0; i < ch.length; i++){
-					depthCounts(ch[i], l+1);
-				}
-			}
-			
-		}
+    
+    function depthCounts(d, l){
+      
+      if(d == null)
+        return 0;
+      
+      if(!l)
+        l = 0;
+      			
+      strLen = Math.max(strLen, d.name.length);
+      
+      if(!nodeDepths[l])
+        nodeDepths[l] = 1;
+      
+      else
+        nodeDepths[l] += 1;
+      
+      var ch = d.children;
+      
+      if(ch){
+        for(var i = 0; i < ch.length; i++){
+          depthCounts(ch[i], l+1);
+        }
+      }
+      
+    }
     
     function startDrag(d){
       dragging = d;
@@ -395,6 +481,7 @@
     }
     
     function endDrag(d){
+            
       if(!d){
         return;
       }
@@ -403,7 +490,7 @@
         console.log("Error: cannot move node to descendant node");
         return;
       }
-      
+      			
       removeNode(dragging);
       dragging.parent = d;
       
@@ -416,9 +503,9 @@
 
         d.children.push(dragging);
       }
-			
-			selected = null;
-			
+      
+      selected = null;
+      
     }
     
     function removeNode(d){
@@ -444,6 +531,13 @@
       
     }
     
+    function countPrev(t){
+      if(t.previousSibling)
+        return countPrev(t.previousSibling) + 1;
+      else
+        return 0;
+    }
+    
     function matchTest(d){
       var result = dragging === d;
       return result;
@@ -454,6 +548,13 @@
         "name": d.name,
         "children" : []
       };
+            
+      if(d.transcript != null){
+        ob.transcript = d.transcript;
+        ob.el = d.el;
+        ob.start = d.start;
+        ob.end = d.end;
+      }
       
       if(d.children)
         for(var i = 0; i < d.children.length; i++){
@@ -478,16 +579,119 @@
         fr.onload = function(){
           data = JSON.parse(fr.result);
           update(data);
-					console.log(data);
-					t.value = "";
+          t.value = "";
         }
         fr.readAsText(files[0]);
       }
     }
     
+    function uploadTranscript(e){
+      var t = e.target || window.event.srcElement;
+      var files = t.files;
+      
+      if(FileReader && files && files.length){
+        var fr = new FileReader();
+        fr.onload = function(){
+          transcript = fr.result;
+          transcripts.push(transcript);
+          //update(data);
+          t.value = "";
+          update(data || {name:"codes", children:{}});
+        }
+        fr.readAsText(files[0]);
+      }
+    }
+    
+    function showTranscript(){
+      if(transcripts.length < 1)
+        return;
+      
+      currTransc++;
+            
+      if(currTransc > transcripts.length - 1)
+        currTransc = 0;
+            
+      var para = transcripts[currTransc].split("\n");
+      
+      var scr = document.querySelector("#script");
+      while(scr.firstChild)
+        scr.removeChild(scr.firstChild);
+      
+      for(var i = 0; i < para.length; i++){
+        var p = document.createElement("br");
+        scr.appendChild(document.createTextNode(para[i]));
+        scr.appendChild(p);
+      }
+      
+      iterateNodes(data, function(d){
+        if(d.transcript != currTransc)
+          return;
+        
+        var el = scr.childNodes[d.el];
+        
+        var r = document.createRange();
+        r.setStart(el, d.start);
+        r.setEnd(el, d.end);
+        
+        var sp = document.createElement("span");
+        sp.className = "highlightText";
+        
+        r.surroundContents(sp);
+      });
+      
+    }
+    
+    function encodeSelection(){
+      var text = "";
+      if(window.getSelection){
+        text = window.getSelection().getRangeAt(0);
+      }
+      else if(document.selection && document.selection.type != "Control"){
+        text = document.selection.createRange();
+      }
+      
+      var selection = {
+        name: text.toString(),
+        children: [],
+        transcript: currTransc,
+        el: countPrev(text.startContainer),
+        start: text.startOffset,
+        end: text.endOffset
+      }
+      if(highlighted != null)
+        addNode(d3.select(highlighted).data()[0], selection);
+      else
+        addNode(data, selection);
+    }
+    
+    function addNode(parent, node){
+      if(parent){
+        if(!parent.hasOwnProperty('children'))
+          parent.children = [];
+              
+        parent.children.push(node);
+      }
+      else
+        parent = node;
+      
+      update(data);
+    }
+    
     (function(){
       document.getElementById("fileField").addEventListener("change", function(e){
         uploadJSON(e);
+      });
+      
+      document.getElementById("transcriptField").addEventListener("change", function(e){
+        uploadTranscript(e);
+      });
+      
+      document.getElementById("showTranscript").addEventListener("click", function(e){
+        showTranscript();
+      });
+      
+      document.getElementById("encodeSelection").addEventListener("click", function(e){
+        encodeSelection();
       });
       
       document.getElementById("insertNode").addEventListener("click", function(e){
@@ -501,16 +705,10 @@
             "children": []
           };
           
-          if(data){
-            if(!data.children)
-              data.children = [];
-          
-            data.children.push(o);
-          }
+          if(highlighted != null)
+            addNode(d3.select(highlighted).data()[0], o);
           else
-            data = o;
-          
-          update(data);
+            addNode(data, o);
         }
       });
       
@@ -521,6 +719,8 @@
         selection.removeAllRanges();
         selection.addRange(range);
       });
+      
+      update();
     })();
   </script>
 </body>
