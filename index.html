@@ -618,10 +618,17 @@
         scr.removeChild(scr.firstChild);
       
       for(var i = 0; i < para.length; i++){
-        var p = document.createElement("br");
-        scr.appendChild(document.createTextNode(para[i]));
+        //var p = document.createElement("br");
+        //scr.appendChild(document.createTextNode(para[i]));
+        console.log()
+        if(para[i].length < 3) continue;
+        
+        var p = document.createElement("p");
+        p.appendChild(document.createTextNode(para[i]));
         scr.appendChild(p);
       }
+      
+      var textNodes = scr.childNodes;
       
       iterateNodes(data, function(d){
         if(d.transcript != currTransc)
@@ -630,6 +637,7 @@
         var el = scr.childNodes[d.el];
         
         var r = document.createRange();
+        console.log(r, el, d);
         r.setStart(el, d.start);
         r.setEnd(el, d.end);
         
