@@ -1,372 +1,178 @@
 {
-  "name": "Codes",
-  "children": [
-    {
-      "name": "Behavior",
-      "children": [
-        {
-          "name": "Function",
-          "children": [
-            {"name": "it tells me the Fucking time"},
-            {"name": "Weather"},
-            {"name": "Time"},
-            {"name": "HR monitor"},
-            {"name": "camera"},
-            {"name": "HR monitor"},
-            {"name": "temperature/weather"},
-            {"name": "timer"},
-            {"name": "Time"},
-            {"name": "change the volume"},
-            {"name": "Notifications"},
-            {"name": "text messages, phone calls, and calendar events only"},
-            {"name": "barcode scanner"},
-            {"name": "display that is always on"},
-            {"name": "I know when I have left my phone behind"},
-            {"name": "notifications"},
-            {"name": "music controller"},
-            {"name": "pedometer"},
-            {"name": "notifications"},
-            {"name": "always on watchface"},
-            {"name": "The original Smartwatch at least woke up when tapped or when you snapped your fingers twice"},
-            {"name": "Pebble display lights up with a flick of the wrist"},
-            {"name": "on the pebble and Metawatch including Weather, Calendar entries etc"},
-            {"name": "screen turns on when I raise my wrist, touch the screen, or press the side button"},
-            {"name": "screen turns off when I lower my wrist or press the side button"},
-            {"name": "voice command"},
-            {"name": "Swiping up and down cycles through the cards, left brings up additional actions, and right dismisses cards"},
-            {"name": "Smart Lock"},
-            {"name": "turn off the screen by putting your palm on it"},
-            {"name": "Pin music in the Play Music app on your phone. Pinned songs will be transferred to your watch automatically"},
-            {"name": "you can turn of the screen by covering it with your hand"},
-            {"name": "I know that you can read the rest of gmail emails by clicking on the card to expand it, then scrolling through it"},
-            {"name": "watch GPS"},
-            {"name": "music playback"}
-          ]
-        },
-        {
-          "name": "Uses",
-          "children": [
-            {"name": "control the Philips Hue lights and Belkin Wemo switches in the house"},
-            {"name": "sleep tracking"},
-            {"name": "control my music"},
-            {"name": "I have the barcodes for three loyalty cards I frequently use"},
-            {"name": "Text notification"},
-            {"name": "music control in the shower"},
-            {"name": "quick canned text replies"},
-            {"name": "Design watchfaces"},
-            {"name": "control my music"},
-            {"name": "check notifications"},
-            {"name": "Alerts: SMS/Email/Apps/incoming calls"},
-            {"name": "Track speed/distance during workouts"},
-            {"name": "Silent alarm on my wrist"},
-            {"name": "new apps"},
-            {"name": "watch faces"},
-            {"name": "Remote control for camera (esp. vacations)"},
-            {"name": "checking notifications"},
-            {"name": "glancing at my watch to get distance and pace"},
-            {"name": "Quick glancing at notifications"},
-            {"name": "check a text"},
-            {"name": "occasional voice command to Google Now"},
-            {"name": "I'm checking the temperature/weather multiple times a day"},
-            {"name": "sms groups"},
-            {"name": "see what song is playing"},
-            {"name": "Authenticator"},
-            {"name": "Music control"},
-            {"name": "I listen to music in the shower"},
-            {"name": "Exercise tracking"},
-            {"name": "navigation"},
-            {"name": "get my stats (time on ride, speed)"},
-            {"name": "have Google Maps navigation pushing directions to my watch"},
-            {"name": "weather at a glance"},
-            {"name": "Sleep tracking"},
-            {"name": "Silent alarms"},
-            {"name": "I have it set up so I can start any music app, start recording a bike ride or run on Strava, lock/unlock my phone (in addition to when it disconnects from the watch), and start/stop my Wi-Fi access point all without touching my phone"},
-            {"name": "replying to messages when I'm busy"},
-            {"name": "Checking notifications"},
-            {"name": "notification glancing"},
-            {"name": "finding my phone when someone tried to hid it"},
-            {"name": "music controls"},
-            {"name": "notifications"},
-            {"name": "put my phone on silent and only the important/urgent notifications are brought to my attention"},
-            {"name": "not missing phone calls when I'm using my computer and my phone is on the table or charging"},
-            {"name": "using glance to send text messages to quickly"},
-            {"name": "discreetly check phone notifications during meetings"},
-            {"name": "subtly check messages"},
-            {"name": "discretely screen calls/text messages when I'm in a meeting, out with friends, on a date, etc"},
-            {"name": "alarm clock in the morning"},
-            {"name": "weather"},
-            {"name": "fitness apps"},
-            {"name": "remote display for my iPhone"},
-            {"name": "tasker to enable and disable notifications on a per app basis based on location:"},
-            {"name": "home automation buttons via glance whenever I'm on my home Wi-Fi"},
-            {"name": "to wake my phone, so from the lockscreen, I can use voice commands"},
-            {"name": "open apps"},
-            {"name": "make phone calls"},
-            {"name": "send text messages"},
-            {"name": "create calendar appointments"},
-            {"name": "look up information online via cards in search support"},
-            {"name": "customize the notifications with Android"},
-            {"name": "quickly read the text off of the watch"},
-            {"name": "It's an amazing ice breaker"},
-            {"name": "never miss a call or text"},
-            {"name": "track my sleep"},
-            {"name": "control the tracks and volume in Google Play Music and Podcast Addict"},
-            {"name": "alerts / directions"},
-            {"name": "Calculator for Android Wear is neat. I've used it for tips before"}
-          ]
-        }
-      ]
+    "data": {
+        "name": "codes",
+        "children": [
+            {
+                "name": "Watch Models",
+                "children": [
+                    {
+                        "name": " LG G Watch",
+                        "children": [],
+                        "transcript": 1,
+                        "el": 0,
+                        "start": 49,
+                        "end": 60
+                    }
+                ]
+            },
+            {
+                "name": "Usability",
+                "children": [
+                    {
+                        "name": "Satisfaction",
+                        "children": [
+                            {
+                                "name": "plan on buying a new one when the new chipset is out",
+                                "children": [],
+                                "transcript": 1,
+                                "el": 20,
+                                "start": 208,
+                                "end": 260
+                            },
+                            {
+                                "name": "looks like you're still using it",
+                                "children": [],
+                                "transcript": 1,
+                                "el": 8,
+                                "start": 132,
+                                "end": 164
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Usage",
+                "children": [
+                    {
+                        "name": "I will start the day at night, so uhh... when I'm sleeping because I'm using it for sleep tracking",
+                        "children": [
+                            {
+                                "name": "it's just interesting to sort of record how much I sleep and how good",
+                                "children": [],
+                                "transcript": 1,
+                                "el": 44,
+                                "start": 1434,
+                                "end": 1503
+                            },
+                            {
+                                "name": "you don't have to put your pohne on your bed, which you usually have to do so it can detect your motions",
+                                "children": [],
+                                "transcript": 1,
+                                "el": 44,
+                                "start": 1561,
+                                "end": 1665
+                            }
+                        ],
+                        "transcript": 1,
+                        "el": 44,
+                        "start": 1257,
+                        "end": 1355
+                    },
+                    {
+                        "name": "wakes me up, by just buzzing",
+                        "children": [
+                            {
+                                "name": "you don't wake everyone else up because their alarm is loud, but it's just discrete buzzing on your wrist",
+                                "children": [],
+                                "transcript": 1,
+                                "el": 44,
+                                "start": 1846,
+                                "end": 1951
+                            }
+                        ],
+                        "transcript": 1,
+                        "el": 44,
+                        "start": 1697,
+                        "end": 1725
+                    },
+                    {
+                        "name": "Notifications",
+                        "children": [
+                            {
+                                "name": "first and foremost I see my notifications",
+                                "children": [
+                                    {
+                                        "name": "incredibly handy",
+                                        "children": [],
+                                        "transcript": 1,
+                                        "el": 28,
+                                        "start": 516,
+                                        "end": 532
+                                    },
+                                    {
+                                        "name": "You don't have to pull out your phone everytime some spam company things about mailing you",
+                                        "children": [],
+                                        "transcript": 1,
+                                        "el": 28,
+                                        "start": 534,
+                                        "end": 624
+                                    },
+                                    {
+                                        "name": "the smartwatch you always have - have that information at a glance",
+                                        "children": [],
+                                        "transcript": 1,
+                                        "el": 28,
+                                        "start": 707,
+                                        "end": 773
+                                    },
+                                    {
+                                        "name": "have your notifications at a glance without actually having to do anything that interrupts your flow",
+                                        "children": [],
+                                        "transcript": 1,
+                                        "el": 36,
+                                        "start": 929,
+                                        "end": 1029
+                                    }
+                                ],
+                                "transcript": 1,
+                                "el": 28,
+                                "start": 425,
+                                "end": 466
+                            },
+                            {
+                                "name": "throughout my day, I see my notifications",
+                                "children": [],
+                                "transcript": 1,
+                                "el": 44,
+                                "start": 1976,
+                                "end": 2017
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Perceptions",
+                "children": [
+                    {
+                        "name": "Manners",
+                        "children": [
+                            {
+                                "name": "it's just a bit of rude to pull out your pohne",
+                                "children": [
+                                    {
+                                        "name": "that's the most ipmortant thing for me",
+                                        "children": [],
+                                        "transcript": 1,
+                                        "el": 28,
+                                        "start": 778,
+                                        "end": 816
+                                    }
+                                ],
+                                "transcript": 1,
+                                "el": 28,
+                                "start": 656,
+                                "end": 702
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
     },
-    {
-      "name": "Emotional Value",
-      "children": [
-        {
-          "name": "Visceral",
-          "children": [
-            {"name": "looked slick enough"},
-            {"name": "they look way cooler"},
-            {"name": "I love looking at the time"},
-            {"name": "It sucked and was super ugly"},
-            {"name": "uncomfortable"},
-            {"name": "I swear by my Pebble Steel. It's a much more streamlined and elegant design - still fairly masculine, but the included leather strap certainly makes it wearable and fairly pleasant looking!"},
-            {"name": "I tried the Samsung Gear and also the Fit and both looked too big for my girls wrist"},
-            {"name": "I have a Samsung Gear 2 Neo. To be honest it is too big for me"},
-            {"name": "I have a fitbit and never wear it because it's hideous"},
-            {"name": "the black one stood out big time on my little wrists and looked totally disproportionate"},
-            {"name": "The watch itself is nice and light"},
-            {"name": "The plastic strap it comes with has made my wrist a little more sweaty at times than I like"},
-            {"name": "Otherwise, it is comfortable to wear"},
-            {"name": "goes with most of the things I wear"},
-            {"name": "it just looks great.. smooth black face & the bright stripey strap"},
-            {"name": "I love concrete buttons"},
-            {"name": "it looked more modern and streamline"},
-            {"name": "colour display is superb"}
-          ]
-        },
-        {
-          "name": "Behavioral",
-          "children": [
-            {"name": "Not having to take my phone out all time has been really awesome"},
-            {"name": "more useful than you might think"},
-            {"name": "Fun"},
-            {"name": "No longer have to pull my phone off my hip and type my password while jogging just to see my distance and pace...worth it"},
-            {"name": "HR monitor worked better than expected"},
-            {"name": "I enjoy just glancing at my watch to get distance and pace"},
-            {"name": "I also enjoy the camera more than expected. It's not great, but it is fairly quick; faster than pulling my phone out"},
-            {"name": "Bad: Battery life"},
-            {"name": "hokey, inconvenient charging adapter"},
-            {"name": "this is really handy in class when the teacher might not appreciate me pulling out my phone to check a text"},
-            {"name": "neat little toy"},
-            {"name": "I might get 200-300 sms during a day. Having a smartwatch makes that so much more tolerable"},
-            {"name": "Being able to see what song is playing is also cool"},
-            {"name": "For me, its been a awesome tool"},
-            {"name": "I don't check my phone when I'm at work or in class, checking the time is so easy with an actual watch compared to pulling out a phone"},
-            {"name": "Usually I can open it by the time whatever website verifies my password (yeah, under a second.)"},
-            {"name": "being able to change the music when I've got a radio station on or a diverse playlist with some stuff I don't want to hear in it is nice"},
-            {"name": "Being able to stop the music if someone tries to talk to me from outside the room is nice"},
-            {"name": "Being able to change the volume when some songs are super loud and some are really quiet is nice"},
-            {"name": "Easy, just glance at your watch"},
-            {"name": "convenient being able to see notifications without having to pull out my phone"},
-            {"name": "music controls (awesome when you're driving)"},
-            {"name": "I love that I can just put my phone on silent and only the important/urgent notifications are brought to my attention"},
-            {"name": "As a former Jawbone Up user (both standard and 24), I can categorically say do NOT buy one. I went through 5 in a year"},
-            {"name": "It is really inspiring to walk a little more when I know I can earn a few more calories for the day"},
-            {"name": "I've had two fitbit flex's and the clasps are just horrendous. I lost two, and had close calls with losing them several times"},
-            {"name": "clunky"},
-            {"name": "Wear mine every day"},
-            {"name": "My husband wore his every day for awhile and found it useful"},
-            {"name": "Eventually he just stopped staying on top of keeping it charged"},
-            {"name": "Just incredibly convenient to be able to subtly check messages and whatnot"},
-            {"name": "Charge lasts about three to four days"},
-            {"name": "FitBit keeps me moving throughout the day"},
-            {"name": "has been useful for my professional career"},
-            {"name": "really convenient to get my texts and calls without having to rudely pull out my phone"},
-            {"name": "so far it has not had a reliable pedometer app"},
-            {"name": "Overall, I like it. It is a fun"},
-            {"name": "super battery life"},
-            {"name": "It does everything I need"},
-            {"name": "I just wish it was a little more rugged"},
-            {"name": "I am not compulsively checking my phone for notifications anymore"},
-            {"name": "For on-the-go information and simple tasks, the usefulness cannot be overstated"},
-            {"name": "I love concrete buttons"},
-            {"name": "I don't carry my phone around with me around the house, but my watch is always on my wrist"},
-            {"name": "I wear the samsung gear S everyday"},
-            {"name": "I wear it daily and the battery life is still astounding... at least 2 days on a charge"},
-            {"name": "Its convenient and ive gotten so used to it that i get weird when i dont have it on"},
-            {"name": "Can't do nearly the amount of things it should do"},
-            {"name": "Widgets on the watch gives unrivaled info at a glance and customizability"},
-            {"name": "it's definitely one of those things that's nice to have but nowhere near a necessity"},
-            {"name": "quick and unobtrusive method for notifications"},
-            {"name": "I don't have to pull out my phone"},
-            {"name": "pedometer is about as accurate as my S5, which is to say, not accurate at all"},
-            {"name": "screen is really too small for any finger input, and even reading long messages can become a hassle"},
-            {"name": "extremely useful in meetings, working around the house or driving because I can see my notifications without interrupting what I'm doing"},
-            {"name": "always on watchface in the day is superb apart from the lack of options"},
-            {"name": "but at night the only way to see the display is to press the button"},
-            {"name": "the watch does not quite cut it"},
-            {"name": "apps are clunky and most really dont work properly"},
-            {"name": "the Original smartwatch's music app was much better"},
-            {"name": "notifications at the moment are pretty good apart from the lack of exchange mail , whats app etc."},
-            {"name": "the battery life is now acceptable (2-3 days)"},
-            {"name": "they released firmware for the Smartwatch which broke the double tap feature"},
-            {"name": "In its current form, the watch essentially requires navigating menus to see most worthwhile information"},
-            {"name": "email app support is abysmal"},
-            {"name": "the clock on the watch began to fall behind"},
-            {"name": "it would be nice, if the watch could show something when the bluetooth connection fails"},
-            {"name": "Smart Lock allows me to unlock my Lollipop phone without entering my PIN. [EDIT: Probably my favorite feature so far if for nothing more than the convenience"},
-            {"name": "Google Maps navigation alerts / directions on my smartwatch is very useful and much safer when driving"},
-            {"name": "I can run in the rain with just waterproof headphones and this IP68 watch rather than bring my phone in a ziploc bag"},
-            {"name": "It's fairly accurate and nice when I don't want to take my phone out of my pocket or talk to my watch"},
-            {"name": "It is just a quicker way then pressing a little button on the side of the watch"},
-            {"name": "Calculator for Android Wear is neat"},
-            {"name": "It took nearly two hours to transfer 1GB of music over to the watch"},
-            {"name": "There may be a bug on my device because if I go into the search list and select 'Play Music' it starts playing shuffled music on my phone. This shouldn't happen because in Android Wear I selected Play Music for the 'Play Music' choice, not 'On the phone'"}
-          ]
-        },
-        {
-          "name": "Reflective",
-          "children": [
-            {"name": "Pretending to check the time so people see my smart watch"},
-            {"name": "It's pretty much an extension of me now"},
-            {"name": "You're checking the time when you don't even care what time it is just to make people jealous :P        You caught me"},
-            {"name": "Checking notifications without being rude in social situations from pulling out my smartphone"},
-            {"name": "In terms of usability I swear by it"},
-            {"name": "To be honest it is too big for me but I wear my techno-whoredom with pride!"},
-            {"name": "I couldn't live without either of them"},
-            {"name": "It is a fun, new gadget that gets a lot of attention"},
-            {"name": "I don't want fancy apps or fancy watchfaces. No color LCD."},
-            {"name": "it's useful in today's always-connected world"},
-            {"name": "Sadly, mostly people assume it's the apple watch"},
-            {"name": "Yeah, the "},
-            {"name": "I just got the GWR because I am an early adopter and I love gadgets"},
-            {"name": "one or two people have asked if it is an iWatch....... eye-roll"},
-            {"name": "Every third idiot asks if it is an iWatch"},
-            {"name": "there have been quite a few idiots that have asked if my moto360 was an apple watch...I just give them the thousand mile stare"},
-            {"name": "Glad to hear im not the only one wearing an Android Wear watch in high school!"},
-            {"name": "I have been asked if it is that the apple watch by one person. Other then than though... all positive reactions"},
-            {"name": "im an early adopter that doesn't mind wasting money and im not upset by the purchase"}
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Misc.",
-      "children": [
-        {
-          "name": "Apps",
-          "children": [
-            {"name": "Tasker"},
-            {"name": "Sleep As Android"},
-            {"name": "Music Boss"},
-            {"name": "Wear Your Barcode"},
-            {"name": "Runkeeper"},
-            {"name": "RunKeeper"},
-            {"name": "Google Now"},
-            {"name": "randomizer app"},
-            {"name": "Strava"},
-            {"name": "Google Maps"},
-            {"name": "Sleep as Android"},
-            {"name": "Tasker"},
-            {"name": "AutoPebble"},
-            {"name": "tasker"},
-            {"name": "glance"},
-            {"name": "MyFitnessPal"},
-            {"name": "MFP"},
-            {"name": "MFP"},
-            {"name": "pebblenotifier"},
-            {"name": "tasker"},
-            {"name": "glance"},
-            {"name": "Glance"},
-            {"name": "Tasker"},
-            {"name": "LiveView"},
-            {"name": "Google launcher"},
-            {"name": "Sleep as Android"},
-            {"name": "Google Fit"},
-            {"name": "My Tracks"},
-            {"name": "Maps"},
-            {"name": "Gmail"},
-            {"name": "Hangouts"},
-            {"name": "Play Music"},
-            {"name": "Podcast Addict"},
-            {"name": "Minuum has a keyboard .apk"},
-            {"name": "https://www.youtube.com/watch?v=28ZgrZ77Low"},
-            {"name": "Calculator"},
-            {"name": "Play Music"}
-          ]
-        },
-        {
-          "name": "Devices",
-          "children": [
-            {"name": "Pebble Steel"},
-            {"name": "Pebble"},
-            {"name": "Pebble"},
-            {"name": "Samsung Gear 2"},
-            {"name": "Gear (1)"},
-            {"name": "pebble"},
-            {"name": "Pebble"},
-            {"name": "Pebble"},
-            {"name": "pebble"},
-            {"name": "Pebble"},
-            {"name": "Jawbone Up"},
-            {"name": "Jawbone Up24"},
-            {"name": "Fitbit Flex"},
-            {"name": "FitBit"},
-            {"name": "Jawbone Up"},
-            {"name": "fitbit flex"},
-            {"name": "pebble"},
-            {"name": "Pebble"},
-            {"name": "Pebble Steel"},
-            {"name": "Moto 360"},
-            {"name": "Samsung Gear"},
-            {"name": "Fit"},
-            {"name": "Sony Smartband"},
-            {"name": "Samsung Gear 2 Neo"},
-            {"name": "Pebble"},
-            {"name": "FitBit Flex"},
-            {"name": "fitbit"},
-            {"name": "Pebble"},
-            {"name": "Smart watch 2"},
-            {"name": "Pebble Steel"},
-            {"name": "moto X"},
-            {"name": "pebble"},
-            {"name": "Pebble Steel"},
-            {"name": "Steel"},
-            {"name": "Pebble"},
-            {"name": "samsung gear S"},
-            {"name": "GWR"},
-            {"name": "Zenwatch"},
-            {"name": "moto360"},
-            {"name": "Pebble"},
-            {"name": "G Watch"},
-            {"name": "360"},
-            {"name": "G Watch"},
-            {"name": "moto 360"},
-            {"name": "360"},
-            {"name": "G Watch R"},
-            {"name": "G-watch"},
-            {"name": "Galaxy Gear"},
-            {"name": "gear fit"},
-            {"name": "Gear 2 neo"},
-            {"name": "LG watch"},
-            {"name": "Sony Smartwatch 2"},
-            {"name": "Galaxy Gear"},
-            {"name": "Pebble"},
-            {"name": "Sony Smartwatch 2"},
-            {"name": "G Watch"}
-          ]
-        },
-        {
-          "name": "Desired Features",
-          "children": [
-            {"name": "I hope there is a smaller sized option for us skinny wristed people"},
-            {"name": "I would love NFC and WiFi on mine"},
-            {"name": "I just wish it was much easier to charge - I'd love for a smartwatch to have some type of contact-based charger that clips onto one end of the strap instead of the current plastic enclosure."},
-            {"name": "More info on the watchface than just the time"},
-            {"name": "lack of the ability to organise the App order on the watch"},
-            {"name": "Turn on the Backlight by a flick of the wrist"}
-          ]
-        }
-      ]
-    }
-  ]
+    "transcripts": [
+        "0:00 Survey you filled out on Reddit, you have an LG G Watch, right?\r\n\r\n0:04 Yeah, that's right. Here, this one.\r\n\r\n0:08 All right, looks like you're still using it.\r\n\r\n0:12 Yep, I am.\r\n\r\n0:13 Okay\r\n\r\n0:15 I plan on buying a new one when the new chipset is out for smartwatches. So the second half of 2016.\r\n\r\n0:27 Good stuff. All right, so, can you tell me what you do with your G Watch on a normal day first?\r\n\r\n0:37 Well, first and foremost I see my notifications, which doesn't sound that awesome, but it's just incredibly handy. You don't have to pull out your phone everytime some spam company things about mailing you. And well, in other situations it's just a bit of rude to pull out your pohne and the smartwatch you always have - have that information at a glance. So that's the most ipmortant thing for me.\r\n\r\n1:14 All right, the most important thing you say, is to not be rude?\r\n\r\nYeah, or is to - well basically  to have your notifications at a glance without actually having to do anything that interrupts your flow, like you just can check - check your watch and go on with whatever you did.\r\n\r\n1:33 Okay. Can you think of someday where you use your smartwatch very normally and just walk me through that day?\r\n\r\n1:45 Uhh, yes I can. I mean, I will start the day at night, so uhh... when I'm sleeping because I'm using it for sleep tracking. Which is interesting, I mean it's - it isn't something important, but for me it's just interesting to sort of record how much I sleep and how good, and the smartwatch is good and easy for that cause then you don't have to put your pohne on your bed, which you usually have to do so it can detect your motions. And then - well my smartwatch wakes me up, by just buzzing, which really isn't that important as well, as long as I'm not somewhere where other people sleep, and simply handy, if you don't wake everyone else up because their alarm is loud, but it's just discrete buzzing on your wrist. And, well then I go on throughout my day, I see my notifications, as I already told you, which is handy. Um... I use it to control my lights, as I actually have smartlights in my room, which is sort of handy. Um... I am - I'm tracking how much I drink throughout the day, so I have a reminder app that tells me to drink enough cause usually I don't drink enough water and I wonder why I'm in a bad mood, so, I can do that through - with my smartwatch as well. And I thinkk another cool thing is music controls. So when you walk somewhere whatever you do and you listen to music you can just skip forward or make it louder or more silent without having to pull your phone every time you want to skip a song or do something. So music controls is really important for me as well. Um... and well, I don't really use the voice feature because, in most situations outside, I think it's sort of awkward to talk to your watch. Umm... but if I'm at home, I usually use it to set timers or reminders so if something is in the oven and I don't want my food to burn, I can just tell it to remind me in fifteen minutes to get my pizza out of the oven or something. So that's, um... I think that's among the top three features, just really quick and easy reminders. And notes, so shopping lists or whatever there is.\r\n\r\n4:33 Okay, so in your experience, the voice commands do work pretty well?\r\n\r\n4:41 Uh, yes they do, at least reminders. I mean, there is supposedly a lot of stuff you can do by voice, and how that isn't really reliable enough for me to use it, especially sending messages. It's great for quick okay or I'll be late or something, but if I just want to send a sort of real message for some content in it, I don't think it's really usable, at least in German, I mean, German voice control is even worse than the English one, but for some simple automated tasks like reminders or timers, it's really handy.\r\n\r\n5:19 Okay. But you said that you only use it at home, home is the only place you'll use voice controls?\r\n\r\nYes, or in a car. Umm... but usually not when other people are around. Uh, another scenario - when I use it is when I'm on my bike, because then I can reply to what's up message or something really quick by voice, and you know, I could type while being on my bike, but it's not exactly safe and the police doesn't like it that much, so, yeah.\r\n\r\n5:55 Okay. So answering messages will be the only - answering messages will be the only time you do that in public?\r\n\r\n6:06 Uh, yes, I think you can say so.\r\n\r\n6:10 Okay, just making sure I understood that. So has there been anytime that you have tried using voice commands while you were with friends or just with other people?\r\n\r\n6:27 Uh, not really, I mean... sometimes when friends are curious, I do just to show them, like, usually questions how - how tall is certain tower, how old is Barack Obama - stuff like that, but not actually meaningful things. I mean, nothing against Barack Obama, but -\r\n\r\n6:51 I'm pretty sure his height or his age aren't that - to most people.\r\n\r\n6:56 No.\r\n\r\nOkay, so othr tyan voice, have their been other times that you've caught yourself playing with your smartwatch while other people were around?\r\n\r\nUhh, yes, a few times. I mean I check notifications while other people are around. Um... but another thing I do or used to do, right now I don't have any games installed, but I used to have like one game, I just had to push numbers in an order that makes sense, so just little time killer which I used at the bus stop or at some boring meeting or wherever it came in handy. And this especially in situations where just - big meeting or something, you don't want to sit the whole time with your phone in your hand, just stare at your phone, people think he's not even listening, what is this? But if it's just discretely playing a game on your watch, that's really, really handy.\r\n\r\n7:56 Okay.\r\n\r\nAnother thing is shopping lists, uh, shopping for groceris, it's just, having a check list and the, I'm using that in public as well.\r\n\r\n8:08 Okay. So I'm asking because I've noticed something with a lot of other people I've talked to and when - with just my use where I'll be talking to one or two people and they notice me glancing at my watch a lot and they get confused about whether I'm in a hurry or whether I have to leave\r\n\r\n8:31 Oh, I know that, yes.\r\n\r\n8:33 I guess it does happen to you, too?\r\n\r\nYes, it does. I mean, I think that two thigns that happen to every smartwatch user, and one is exactly this, people tihnk you're in a hurry or ask do you have to go somewhere because you just - they see just received a Facebook message and the other thing is the question - is that an Apple Watch? But that's a different story.\r\n\r\n8:59 Okay, that's another one I've heard very consisntently.\r\n\r\n9:03 Yes, it's just - society isn't used to watches being more than just time devices yet, so, that's sort of understandable, I guess.\r\n\r\n9:13 I mean that could be part of it, but I like how everyone assumes, oh, it's an Apple Watch.\r\n\r\n9:16 Oh, yes. But I mean, I'm sort of when people ask that because my G Watch isn't like the, the most beautiful watch in this world, and if people ask if this is an Apple Watch, then it's sort of shows that it isn't that ugly because people at least think that it could come from Apple.\r\n\r\n(Phone interruption)\r\n\r\n10:21 So you said that you're happy when people confuse your watch for an Apple Watch?\r\n\r\nYes, a bit, I mean not really happy, but I - I see the good in it, so...\r\n\r\n10:35 Can you elaborate a little bit?\r\n\r\nYes, because, I mean, the Apple Watch - I don't think it's really beautiful, but generally people thikn of Apple Products as sleek, beautiful products, and my G Watch isn't really sleek or beautful, it's just functional, but, not much more, so if people even think about calliling or asking me if it comes fro Apple that shows that it's not that ugly. That's my main motifvation for veing happy when people ask that. And the other thing is I'm terribly annoyed because no, it isn't an Apple Watch.\r\n\r\n11:17 I have seen that sentiment a lot, too. I remember a previous, brief study where I was just looking through Reddit, and that was one of the tihngs I found frustrated most Android Smartwatch users.\r\n\r\n11:32 Yeah. I can feel them.\r\n\r\n11:36 Okay. So, double checking I've gt everything right, you definitely don't want to use voice controls in public unless you're riding like a bike and there's noother way to answer your texts...\r\n\r\nNope, I don't, not at all.\r\n\r\nOkay, and you mentioned briefly that you'll demonstrate your smartwatch for people from time to time - Go ahead\r\n\r\nAsk first -  I can elaborate later.\r\n\r\nI was just going to ask what kinds of questions people ask you about it.\r\n\r\n12:18 Well, the first question is really - is taht an Apple Watch, to which I respond with, well, it is, but ti's not from Apple, cause I got tired of explaining the differences. Umm, and then they asked, what can it do, so I just show them. Of course, um... the watch face, so it can show the time as well, it's not like you give up on that, and then I show them notifications, ask random questions, voice search, and you know, some basic apps, although I don't really use apps that much, but you know, notes, Google Maps, that kind of stuff.\r\n\r\n12:59 Okay. And those are - do you get a handful of those, then?\r\n\r\nJust questions?\r\n\r\nYeah\r\n\r\nUmm, yes, I mean - my friends, they know what it is, but whenever I'm just like meeting someone new, and like, a casual setting, usually the people ask me because they rarely see smartwatches, so, yes. I get a couple of these questions.\r\n\r\nAll right. And you indicated on Reddit that you don't see other people with smartwatches very often?\r\n\r\nNo, not really. I think I once saw another, but I saw an Apple Watch, and I think one Moto 360, and I actually see a lot of Samsung smartwatches, which is kind of surprising to me because I never even considered getting one, but uh, I think it's - not newest one, but I think it's the Gear S with the button. That one I see a lot.\r\n\r\n14:13 Weird, I heard the newer one was pretty nice with the rotating bezel.\r\n\r\nYes, it looks cool, but I mean, if the platform doesn't have enough support, it's not worth it to me.\r\n\r\nThat's true, too. Okay, so... these other smartwatches, are these on people that you know that you can talk to me a little bit about?\r\n\r\n14:39 Umm... Not really, I mean, a good friend of me has smartwatch as well, but apart from that it's just, I'm at a train station and somebody rushes by and out of the corner of my eye, I notice, oh, that's a smartwatch, but it's not that I talk to them about it, it's just - yeah.\r\n\r\n15:04 Okay, so I'm gonna guess these are strangers then.\r\n\r\nYes. As I said, I have one friend who has one as well, but apart from that, nobody I know - oh yes, two friends actually. One got convinced that he has to get one two thirds to buying now, but yeah.\r\n\r\n15:25 All right, so first these strangers, how do you notice their smartwatches?\r\n\r\nBy looks.\r\n\r\nSo you'll just see it on their wrist casually?\r\n\r\nExactly. I mean, it's... Umm... I see an Apple Watch, I notice an Apple Watch when I see one because of all the advertisement, basically, it's just - the looks are just in my mind, um... And apart from that, most smartwatches I notice on other people just have really distinct looks that immideately scream I'm not a normal watch, so they're big rectangular, like Samsung one. It's really more difficult if somebody has a Moto 360 because then you really have to double check if that's screen or it's just a big watch, but I mean the rectangular ones it's really obvious that it's a smartwatch so I just notice it.\r\n\r\n16:29 All right. So how tech savvy would you say that you are?\r\n\r\nUhh... I'd say eight out of ten or something, so, pretty tech savvy. Um... I... I read a lot of articles, you know, um... Hardware stuff, the Verge and such sites, I built my own PCs, so I'm really into it.\r\n\r\n16:59 Okay\r\n\r\nAlthough I try not to be the stereotypical nerd, so I don't bother anyone by telling them how cool that new smartphone is, but I know that it is cool, but I just keep it to myself.\r\n\r\n17:17 Okay. All right, so getting back t these other two friends you mentioned with smartwatches. Can you tell me a little bit about how they use them, or at least about how you've seen them use them?\r\n\r\n17:29 Yes, uh, one of them is really into tech as well. In that regard he's pretty much like me, and um, apart from sleep tracking and that, you know fancier stuff, he uses it just like me for notifications and just things that you could do on your phone as well but are just quicker and more comfortable on your watch, and, uh, the other friend... Sort of got into it because of looks. He thought about a smartwatch but always thought, umm, these pieces are really ugly, and then I showed him a pic of uh... of the LG Watch Urbane, and he was like that one actually looks great and sort of turned into a smartwatch user. Just one day was just, by the way, I bought it and I have it, and then I was incredibly jealous and, cause it looks way better than my watch. And I think he just uses it for notifications as well. And he's really not much into tech, so I suppose he doesn't even know many of the things he could do with it and just sticks with what - is really in your face, which is notifications and like some basic apps, but yeah, that's about it.\r\n\r\n18:52 Okay. So this friend that got the Urbane, you get the impression that for them it's just kind of a fashion statement?\r\n\r\n19:00 Uhh, sort of. I mean, it's not like he wanted a beautiful watch and then bought the Urbane, but he was like, I don't even consider getting a smartwatch if it doesn't look good. So it's fifty-fifty I'd say.\r\n\r\n19:21 Okay\r\n\r\n19:22 It certainly is a fashion statement, bot not only he - he wanted the functionality as well.\r\n\r\n19:30 All right. Sorry, taking lots of notes here\r\n\r\n19:39 No problem, take your time.\r\n\r\n19:43 All right. So, have you ever heard of or thought of any safety concerns or anything like that you might have associated with smartwatches?\r\n\r\nUm, no, not at all. Could you give me an example of one of these concerns, because....\r\n\r\n20:07 So, one example that I saw a few months back was some articles about how the bluetooth in technology could be tracked or sniffed or intercepted somehow and it's not encrypted, or something like that.\r\n\r\n20:22 Oh, I see. Yes, but... I remember I read an article about that as well, but it doesn't really concern me. Um... Usually my stance on that is uh, that if somebody really does the effort to hack into my bluetooth, which you can't just do with your typical iPhone app or something, I mean you really have to want to do it, um ,in order to accomplish it, then I'm sure this guy would find - found out how to hack into my phone as well without me having a watch, so I don't think the watch, um, brings any safety concerns to the table that the smartphone doesn't already.\r\n\r\n21:11 Okay. Another thing I've heard, and I haven't heard it very commonly, but I've heard of some people getting distracted. You know the way you see someone messing their phone and getting distracted with that? I've heard of similar things happening with their watches.\r\n\r\n21:34 Mmm... I've - I think that really is a thing, I mean, um, that happens.  But I guess it's same with phones, again, so, I mean... My phone always distracts me, and so does my watch, but it distracts me less. I guess, uh, one real problem is that, um, that it's sort of easier to get distraced by the watch, so I never even consider using my phone while driving, but it's really easier to just glance at your watch while driving cause it feels so natural, although you just - just as distracted and just watching the screen and not taking care what street, but I don't think that's a major issue, I think, being distracted by your phone is way more common and also more dangerous than being distracted by a watch, cause usually your interaction with the watch is no longer than two or three seconds, at least if you just glance because you get anotification or something. I don't know many people that start to write an essay on their watch or seomthing for two hours, so...\r\n\r\n22:56 If you're battery could last that long, I'd be pretty impressed. All right -\r\n\r\nWell, my battery lasts around two days, plus or minus, so it could work\r\n\r\n23:10 Okay, G Watch might be doable, better than Moto 360 then\r\n\r\nYeah, that's possible. It's first genration, isn't it?\r\n\r\nYeah\r\n\r\nYeah\r\n\r\n23:22 All right, so, aside from voice controls, especially in public, are there any other functions or apps that you don't like using?\r\n\r\n23:35 Uhh, I don't like using - uh, anything that really takes longer than five or ten seconds to use. So I would use the weather app because it just open it, look at the forecast or whatever and close it again and go on with whatever you do, but, let me check my watch for a second, um... If for example, the translator, I rarely use because uh, I rarely use translators? That's one thing. The other thing is that... it's really dependent on, uh... um... using the correct word. And that usually takes some time or if you want to translate more than one word, that needs to, it takes a lot of time and for that it's just easier to use your phone, especially becase you have a normal keyboard. And it just really frustrating if you use voice control and it doesn't - it doesn't understand you and you have to say it again because then, the time you would have won by using your watch is already lost because you have to repeat it, so... If an app or an action requires longer than a few seconds, I'd rather use my phone because that's... I have more screen space and it's just more comfortable.\r\n\r\n25:16 Okay, so that sounds like mostly usability issue.\r\n\r\nUh, yes it is. And not only usability, I mean, just, somethings with good controls and usability are just not possible, using screen space, I mean I wouldn't read a whole article or something. There are means by flashing word after word on the screen or seomthing, but it's just not comfortable to use. So... If there's information, it should be, like, small peices of information and for the real detailed imformation, I would go to my phone anyway because just bigger.\r\n\r\n25:59 Okay. So I heard this morning, in an earlier interview that G Watch is still getting Android Wear updates, correct?\r\n\r\nYes, it does. I don't htink there is a single Android Wear Watch that doesn't receive updates anymore, which is pretty great.\r\n\r\nOh yeah. So I'm curious whether you have tried messing with the wrist gestures for your watch.\r\n\r\nUh, yes. I actually did, and I use them a lot. So, I really did mess with them\r\n\r\n26:36 Okay, do you use them same as voice, or do you use them more often or - can you tell me a bit more about that?\r\n\r\nDefinitely more. I mean there's one gesture for going up or down in your notifications screen, and I use that a lot because it is quicker and easier to just get to the next indication by just doing it a flick of the wrist. Or um, you don't need your second hand, so if you have - you're carryig anything or sittin gon your bike or something you can still scroll through every notification without using your hands, which is great. And, um, what else there, I'm just uh - usual gesture to raise your arm to light up your screen, but I guess you really can't use a smartwatch without using this gesture.\r\n\r\nYeah\r\n\r\n27:32 Um, but - of the new gestures that were added with the last update, I rarely used them because they work - don't work that good.\r\n\r\nHmm. Okay. Have you ever used these gestures while anyone else was around?\r\n\r\nUh, yes I did. It doesn't feel as awkward as using the voice, to just flick your wrist, as long as you don't do it repeatedly for ten times, then you look sort of strange, just standing there for a minute shaking your wrist that...\r\n\r\nOkay. I'm just asking because, again some of the other people I've talked to avoid those gestures just because they're worried about looking weird, like they have some kind of nervous tick or something.\r\n\r\nYeah, I see. I think the, uh, the scroll gesture is okay. I mean, the new gesture, you really have to shake your arm, I think, to get back to the watch face. That really could get awkward, but, just... more discrete gestures are fine with me.\r\n\r\n28:41 So mostly the up and down ones you're okay with?\r\n\r\nYes, that one and - and sometimes the go back, go back one, so, um, raising your arm and uh... putting it down again, which is actually a new one as well. So if um... umm... when I use it, I know it... it's hard to remember because it just, after a time it's just natural, so, yeah. Yeah, but that's when I use it, I use it from time to time as well.\r\n\r\n29:18 Okay, because I definitely remember - okay, I can actually remember two occasions. One was where I was messing with the wrist flicking. I had some friends further down the table that noticed me doing that and they just pointed and giggled. And I don't blame them, here I am, looking at my watch... Then there was another time at a conference I was talking to my friends, and I cant'r remember why I was checking my watch, but they noticed me keep on slapping it, and they thought it was the weirdest thing.\r\n\r\nOh yes!\r\n\r\nYou ever had moments like that?\r\n\r\n29:59 Some friends notice as well when I sort of slap my watch to get back in, but then I told them what it does and they thought it was kind of cool to just close everything by putting your palm on the watch, which sort of is a powerful gesture, so that's the cool thing about it.\r\n\r\nPowerful gesture you say?\r\n\r\nYes, just slam it and shut off watch.\r\n\r\nInteresting that you say that cause another friend of mine, he calls it shutting his watch up, and he apparently feels so satisfied every time he gets to do it.\r\n\r\nYes, I can definitely relate to that.\r\n\r\n30:47 All right. So, I think I've touched on all the major points I wanted to get to. Is there anything else you'd like to share before we wrap up, or if you have any questions for me?\r\n\r\n(Not satisfied with current available smartwatches, waiting on new chip for smartwatches)\r\n\r\n($60 entry point)\r\n\r\n(No watch good looking, has speaker and NFC)\r\n",
+        "0:00 Survey you filled out on Reddit, you have an LG G Watch, right?\r\n\r\n0:04 Yeah, that's right. Here, this one.\r\n\r\n0:08 All right, looks like you're still using it.\r\n\r\n0:12 Yep, I am.\r\n\r\n0:13 Okay\r\n\r\n0:15 I plan on buying a new one when the new chipset is out for smartwatches. So the second half of 2016.\r\n\r\n0:27 Good stuff. All right, so, can you tell me what you do with your G Watch on a normal day first?\r\n\r\n0:37 Well, first and foremost I see my notifications, which doesn't sound that awesome, but it's just incredibly handy. You don't have to pull out your phone everytime some spam company things about mailing you. And well, in other situations it's just a bit of rude to pull out your pohne and the smartwatch you always have - have that information at a glance. So that's the most ipmortant thing for me.\r\n\r\n1:14 All right, the most important thing you say, is to not be rude?\r\n\r\nYeah, or is to - well basically  to have your notifications at a glance without actually having to do anything that interrupts your flow, like you just can check - check your watch and go on with whatever you did.\r\n\r\n1:33 Okay. Can you think of someday where you use your smartwatch very normally and just walk me through that day?\r\n\r\n1:45 Uhh, yes I can. I mean, I will start the day at night, so uhh... when I'm sleeping because I'm using it for sleep tracking. Which is interesting, I mean it's - it isn't something important, but for me it's just interesting to sort of record how much I sleep and how good, and the smartwatch is good and easy for that cause then you don't have to put your pohne on your bed, which you usually have to do so it can detect your motions. And then - well my smartwatch wakes me up, by just buzzing, which really isn't that important as well, as long as I'm not somewhere where other people sleep, and simply handy, if you don't wake everyone else up because their alarm is loud, but it's just discrete buzzing on your wrist. And, well then I go on throughout my day, I see my notifications, as I already told you, which is handy. Um... I use it to control my lights, as I actually have smartlights in my room, which is sort of handy. Um... I am - I'm tracking how much I drink throughout the day, so I have a reminder app that tells me to drink enough cause usually I don't drink enough water and I wonder why I'm in a bad mood, so, I can do that through - with my smartwatch as well. And I thinkk another cool thing is music controls. So when you walk somewhere whatever you do and you listen to music you can just skip forward or make it louder or more silent without having to pull your phone every time you want to skip a song or do something. So music controls is really important for me as well. Um... and well, I don't really use the voice feature because, in most situations outside, I think it's sort of awkward to talk to your watch. Umm... but if I'm at home, I usually use it to set timers or reminders so if something is in the oven and I don't want my food to burn, I can just tell it to remind me in fifteen minutes to get my pizza out of the oven or something. So that's, um... I think that's among the top three features, just really quick and easy reminders. And notes, so shopping lists or whatever there is.\r\n\r\n4:33 Okay, so in your experience, the voice commands do work pretty well?\r\n\r\n4:41 Uh, yes they do, at least reminders. I mean, there is supposedly a lot of stuff you can do by voice, and how that isn't really reliable enough for me to use it, especially sending messages. It's great for quick okay or I'll be late or something, but if I just want to send a sort of real message for some content in it, I don't think it's really usable, at least in German, I mean, German voice control is even worse than the English one, but for some simple automated tasks like reminders or timers, it's really handy.\r\n\r\n5:19 Okay. But you said that you only use it at home, home is the only place you'll use voice controls?\r\n\r\nYes, or in a car. Umm... but usually not when other people are around. Uh, another scenario - when I use it is when I'm on my bike, because then I can reply to what's up message or something really quick by voice, and you know, I could type while being on my bike, but it's not exactly safe and the police doesn't like it that much, so, yeah.\r\n\r\n5:55 Okay. So answering messages will be the only - answering messages will be the only time you do that in public?\r\n\r\n6:06 Uh, yes, I think you can say so.\r\n\r\n6:10 Okay, just making sure I understood that. So has there been anytime that you have tried using voice commands while you were with friends or just with other people?\r\n\r\n6:27 Uh, not really, I mean... sometimes when friends are curious, I do just to show them, like, usually questions how - how tall is certain tower, how old is Barack Obama - stuff like that, but not actually meaningful things. I mean, nothing against Barack Obama, but -\r\n\r\n6:51 I'm pretty sure his height or his age aren't that - to most people.\r\n\r\n6:56 No.\r\n\r\nOkay, so othr tyan voice, have their been other times that you've caught yourself playing with your smartwatch while other people were around?\r\n\r\nUhh, yes, a few times. I mean I check notifications while other people are around. Um... but another thing I do or used to do, right now I don't have any games installed, but I used to have like one game, I just had to push numbers in an order that makes sense, so just little time killer which I used at the bus stop or at some boring meeting or wherever it came in handy. And this especially in situations where just - big meeting or something, you don't want to sit the whole time with your phone in your hand, just stare at your phone, people think he's not even listening, what is this? But if it's just discretely playing a game on your watch, that's really, really handy.\r\n\r\n7:56 Okay.\r\n\r\nAnother thing is shopping lists, uh, shopping for groceris, it's just, having a check list and the, I'm using that in public as well.\r\n\r\n8:08 Okay. So I'm asking because I've noticed something with a lot of other people I've talked to and when - with just my use where I'll be talking to one or two people and they notice me glancing at my watch a lot and they get confused about whether I'm in a hurry or whether I have to leave\r\n\r\n8:31 Oh, I know that, yes.\r\n\r\n8:33 I guess it does happen to you, too?\r\n\r\nYes, it does. I mean, I think that two thigns that happen to every smartwatch user, and one is exactly this, people tihnk you're in a hurry or ask do you have to go somewhere because you just - they see just received a Facebook message and the other thing is the question - is that an Apple Watch? But that's a different story.\r\n\r\n8:59 Okay, that's another one I've heard very consisntently.\r\n\r\n9:03 Yes, it's just - society isn't used to watches being more than just time devices yet, so, that's sort of understandable, I guess.\r\n\r\n9:13 I mean that could be part of it, but I like how everyone assumes, oh, it's an Apple Watch.\r\n\r\n9:16 Oh, yes. But I mean, I'm sort of when people ask that because my G Watch isn't like the, the most beautiful watch in this world, and if people ask if this is an Apple Watch, then it's sort of shows that it isn't that ugly because people at least think that it could come from Apple.\r\n\r\n(Phone interruption)\r\n\r\n10:21 So you said that you're happy when people confuse your watch for an Apple Watch?\r\n\r\nYes, a bit, I mean not really happy, but I - I see the good in it, so...\r\n\r\n10:35 Can you elaborate a little bit?\r\n\r\nYes, because, I mean, the Apple Watch - I don't think it's really beautiful, but generally people thikn of Apple Products as sleek, beautiful products, and my G Watch isn't really sleek or beautful, it's just functional, but, not much more, so if people even think about calliling or asking me if it comes fro Apple that shows that it's not that ugly. That's my main motifvation for veing happy when people ask that. And the other thing is I'm terribly annoyed because no, it isn't an Apple Watch.\r\n\r\n11:17 I have seen that sentiment a lot, too. I remember a previous, brief study where I was just looking through Reddit, and that was one of the tihngs I found frustrated most Android Smartwatch users.\r\n\r\n11:32 Yeah. I can feel them.\r\n\r\n11:36 Okay. So, double checking I've gt everything right, you definitely don't want to use voice controls in public unless you're riding like a bike and there's noother way to answer your texts...\r\n\r\nNope, I don't, not at all.\r\n\r\nOkay, and you mentioned briefly that you'll demonstrate your smartwatch for people from time to time - Go ahead\r\n\r\nAsk first -  I can elaborate later.\r\n\r\nI was just going to ask what kinds of questions people ask you about it.\r\n\r\n12:18 Well, the first question is really - is taht an Apple Watch, to which I respond with, well, it is, but ti's not from Apple, cause I got tired of explaining the differences. Umm, and then they asked, what can it do, so I just show them. Of course, um... the watch face, so it can show the time as well, it's not like you give up on that, and then I show them notifications, ask random questions, voice search, and you know, some basic apps, although I don't really use apps that much, but you know, notes, Google Maps, that kind of stuff.\r\n\r\n12:59 Okay. And those are - do you get a handful of those, then?\r\n\r\nJust questions?\r\n\r\nYeah\r\n\r\nUmm, yes, I mean - my friends, they know what it is, but whenever I'm just like meeting someone new, and like, a casual setting, usually the people ask me because they rarely see smartwatches, so, yes. I get a couple of these questions.\r\n\r\nAll right. And you indicated on Reddit that you don't see other people with smartwatches very often?\r\n\r\nNo, not really. I think I once saw another, but I saw an Apple Watch, and I think one Moto 360, and I actually see a lot of Samsung smartwatches, which is kind of surprising to me because I never even considered getting one, but uh, I think it's - not newest one, but I think it's the Gear S with the button. That one I see a lot.\r\n\r\n14:13 Weird, I heard the newer one was pretty nice with the rotating bezel.\r\n\r\nYes, it looks cool, but I mean, if the platform doesn't have enough support, it's not worth it to me.\r\n\r\nThat's true, too. Okay, so... these other smartwatches, are these on people that you know that you can talk to me a little bit about?\r\n\r\n14:39 Umm... Not really, I mean, a good friend of me has smartwatch as well, but apart from that it's just, I'm at a train station and somebody rushes by and out of the corner of my eye, I notice, oh, that's a smartwatch, but it's not that I talk to them about it, it's just - yeah.\r\n\r\n15:04 Okay, so I'm gonna guess these are strangers then.\r\n\r\nYes. As I said, I have one friend who has one as well, but apart from that, nobody I know - oh yes, two friends actually. One got convinced that he has to get one two thirds to buying now, but yeah.\r\n\r\n15:25 All right, so first these strangers, how do you notice their smartwatches?\r\n\r\nBy looks.\r\n\r\nSo you'll just see it on their wrist casually?\r\n\r\nExactly. I mean, it's... Umm... I see an Apple Watch, I notice an Apple Watch when I see one because of all the advertisement, basically, it's just - the looks are just in my mind, um... And apart from that, most smartwatches I notice on other people just have really distinct looks that immideately scream I'm not a normal watch, so they're big rectangular, like Samsung one. It's really more difficult if somebody has a Moto 360 because then you really have to double check if that's screen or it's just a big watch, but I mean the rectangular ones it's really obvious that it's a smartwatch so I just notice it.\r\n\r\n16:29 All right. So how tech savvy would you say that you are?\r\n\r\nUhh... I'd say eight out of ten or something, so, pretty tech savvy. Um... I... I read a lot of articles, you know, um... Hardware stuff, the Verge and such sites, I built my own PCs, so I'm really into it.\r\n\r\n16:59 Okay\r\n\r\nAlthough I try not to be the stereotypical nerd, so I don't bother anyone by telling them how cool that new smartphone is, but I know that it is cool, but I just keep it to myself.\r\n\r\n17:17 Okay. All right, so getting back t these other two friends you mentioned with smartwatches. Can you tell me a little bit about how they use them, or at least about how you've seen them use them?\r\n\r\n17:29 Yes, uh, one of them is really into tech as well. In that regard he's pretty much like me, and um, apart from sleep tracking and that, you know fancier stuff, he uses it just like me for notifications and just things that you could do on your phone as well but are just quicker and more comfortable on your watch, and, uh, the other friend... Sort of got into it because of looks. He thought about a smartwatch but always thought, umm, these pieces are really ugly, and then I showed him a pic of uh... of the LG Watch Urbane, and he was like that one actually looks great and sort of turned into a smartwatch user. Just one day was just, by the way, I bought it and I have it, and then I was incredibly jealous and, cause it looks way better than my watch. And I think he just uses it for notifications as well. And he's really not much into tech, so I suppose he doesn't even know many of the things he could do with it and just sticks with what - is really in your face, which is notifications and like some basic apps, but yeah, that's about it.\r\n\r\n18:52 Okay. So this friend that got the Urbane, you get the impression that for them it's just kind of a fashion statement?\r\n\r\n19:00 Uhh, sort of. I mean, it's not like he wanted a beautiful watch and then bought the Urbane, but he was like, I don't even consider getting a smartwatch if it doesn't look good. So it's fifty-fifty I'd say.\r\n\r\n19:21 Okay\r\n\r\n19:22 It certainly is a fashion statement, bot not only he - he wanted the functionality as well.\r\n\r\n19:30 All right. Sorry, taking lots of notes here\r\n\r\n19:39 No problem, take your time.\r\n\r\n19:43 All right. So, have you ever heard of or thought of any safety concerns or anything like that you might have associated with smartwatches?\r\n\r\nUm, no, not at all. Could you give me an example of one of these concerns, because....\r\n\r\n20:07 So, one example that I saw a few months back was some articles about how the bluetooth in technology could be tracked or sniffed or intercepted somehow and it's not encrypted, or something like that.\r\n\r\n20:22 Oh, I see. Yes, but... I remember I read an article about that as well, but it doesn't really concern me. Um... Usually my stance on that is uh, that if somebody really does the effort to hack into my bluetooth, which you can't just do with your typical iPhone app or something, I mean you really have to want to do it, um ,in order to accomplish it, then I'm sure this guy would find - found out how to hack into my phone as well without me having a watch, so I don't think the watch, um, brings any safety concerns to the table that the smartphone doesn't already.\r\n\r\n21:11 Okay. Another thing I've heard, and I haven't heard it very commonly, but I've heard of some people getting distracted. You know the way you see someone messing their phone and getting distracted with that? I've heard of similar things happening with their watches.\r\n\r\n21:34 Mmm... I've - I think that really is a thing, I mean, um, that happens.  But I guess it's same with phones, again, so, I mean... My phone always distracts me, and so does my watch, but it distracts me less. I guess, uh, one real problem is that, um, that it's sort of easier to get distraced by the watch, so I never even consider using my phone while driving, but it's really easier to just glance at your watch while driving cause it feels so natural, although you just - just as distracted and just watching the screen and not taking care what street, but I don't think that's a major issue, I think, being distracted by your phone is way more common and also more dangerous than being distracted by a watch, cause usually your interaction with the watch is no longer than two or three seconds, at least if you just glance because you get anotification or something. I don't know many people that start to write an essay on their watch or seomthing for two hours, so...\r\n\r\n22:56 If you're battery could last that long, I'd be pretty impressed. All right -\r\n\r\nWell, my battery lasts around two days, plus or minus, so it could work\r\n\r\n23:10 Okay, G Watch might be doable, better than Moto 360 then\r\n\r\nYeah, that's possible. It's first genration, isn't it?\r\n\r\nYeah\r\n\r\nYeah\r\n\r\n23:22 All right, so, aside from voice controls, especially in public, are there any other functions or apps that you don't like using?\r\n\r\n23:35 Uhh, I don't like using - uh, anything that really takes longer than five or ten seconds to use. So I would use the weather app because it just open it, look at the forecast or whatever and close it again and go on with whatever you do, but, let me check my watch for a second, um... If for example, the translator, I rarely use because uh, I rarely use translators? That's one thing. The other thing is that... it's really dependent on, uh... um... using the correct word. And that usually takes some time or if you want to translate more than one word, that needs to, it takes a lot of time and for that it's just easier to use your phone, especially becase you have a normal keyboard. And it just really frustrating if you use voice control and it doesn't - it doesn't understand you and you have to say it again because then, the time you would have won by using your watch is already lost because you have to repeat it, so... If an app or an action requires longer than a few seconds, I'd rather use my phone because that's... I have more screen space and it's just more comfortable.\r\n\r\n25:16 Okay, so that sounds like mostly usability issue.\r\n\r\nUh, yes it is. And not only usability, I mean, just, somethings with good controls and usability are just not possible, using screen space, I mean I wouldn't read a whole article or something. There are means by flashing word after word on the screen or seomthing, but it's just not comfortable to use. So... If there's information, it should be, like, small peices of information and for the real detailed imformation, I would go to my phone anyway because just bigger.\r\n\r\n25:59 Okay. So I heard this morning, in an earlier interview that G Watch is still getting Android Wear updates, correct?\r\n\r\nYes, it does. I don't htink there is a single Android Wear Watch that doesn't receive updates anymore, which is pretty great.\r\n\r\nOh yeah. So I'm curious whether you have tried messing with the wrist gestures for your watch.\r\n\r\nUh, yes. I actually did, and I use them a lot. So, I really did mess with them\r\n\r\n26:36 Okay, do you use them same as voice, or do you use them more often or - can you tell me a bit more about that?\r\n\r\nDefinitely more. I mean there's one gesture for going up or down in your notifications screen, and I use that a lot because it is quicker and easier to just get to the next indication by just doing it a flick of the wrist. Or um, you don't need your second hand, so if you have - you're carryig anything or sittin gon your bike or something you can still scroll through every notification without using your hands, which is great. And, um, what else there, I'm just uh - usual gesture to raise your arm to light up your screen, but I guess you really can't use a smartwatch without using this gesture.\r\n\r\nYeah\r\n\r\n27:32 Um, but - of the new gestures that were added with the last update, I rarely used them because they work - don't work that good.\r\n\r\nHmm. Okay. Have you ever used these gestures while anyone else was around?\r\n\r\nUh, yes I did. It doesn't feel as awkward as using the voice, to just flick your wrist, as long as you don't do it repeatedly for ten times, then you look sort of strange, just standing there for a minute shaking your wrist that...\r\n\r\nOkay. I'm just asking because, again some of the other people I've talked to avoid those gestures just because they're worried about looking weird, like they have some kind of nervous tick or something.\r\n\r\nYeah, I see. I think the, uh, the scroll gesture is okay. I mean, the new gesture, you really have to shake your arm, I think, to get back to the watch face. That really could get awkward, but, just... more discrete gestures are fine with me.\r\n\r\n28:41 So mostly the up and down ones you're okay with?\r\n\r\nYes, that one and - and sometimes the go back, go back one, so, um, raising your arm and uh... putting it down again, which is actually a new one as well. So if um... umm... when I use it, I know it... it's hard to remember because it just, after a time it's just natural, so, yeah. Yeah, but that's when I use it, I use it from time to time as well.\r\n\r\n29:18 Okay, because I definitely remember - okay, I can actually remember two occasions. One was where I was messing with the wrist flicking. I had some friends further down the table that noticed me doing that and they just pointed and giggled. And I don't blame them, here I am, looking at my watch... Then there was another time at a conference I was talking to my friends, and I cant'r remember why I was checking my watch, but they noticed me keep on slapping it, and they thought it was the weirdest thing.\r\n\r\nOh yes!\r\n\r\nYou ever had moments like that?\r\n\r\n29:59 Some friends notice as well when I sort of slap my watch to get back in, but then I told them what it does and they thought it was kind of cool to just close everything by putting your palm on the watch, which sort of is a powerful gesture, so that's the cool thing about it.\r\n\r\nPowerful gesture you say?\r\n\r\nYes, just slam it and shut off watch.\r\n\r\nInteresting that you say that cause another friend of mine, he calls it shutting his watch up, and he apparently feels so satisfied every time he gets to do it.\r\n\r\nYes, I can definitely relate to that.\r\n\r\n30:47 All right. So, I think I've touched on all the major points I wanted to get to. Is there anything else you'd like to share before we wrap up, or if you have any questions for me?\r\n\r\n(Not satisfied with current available smartwatches, waiting on new chip for smartwatches)\r\n\r\n($60 entry point)\r\n\r\n(No watch good looking, has speaker and NFC)\r\n"
+    ]
 }

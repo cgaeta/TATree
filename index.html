@@ -19,6 +19,11 @@
       max-height: 640px;
       overflow-y: scroll;
       display: inline-block;
+      white-space: pre-wrap;
+    }
+    
+    #script span {
+      background-color: rgba(255, 255, 0, 7);
     }
     
     #json {
@@ -610,42 +615,32 @@
             
       if(currTransc > transcripts.length - 1)
         currTransc = 0;
-            
-      var para = transcripts[currTransc].split("\n");
-      
+                  
       var scr = document.querySelector("#script");
       while(scr.firstChild)
         scr.removeChild(scr.firstChild);
       
-      for(var i = 0; i < para.length; i++){
-        //var p = document.createElement("br");
-        //scr.appendChild(document.createTextNode(para[i]));
-        console.log()
-        if(para[i].length < 3) continue;
-        
-        var p = document.createElement("p");
-        p.appendChild(document.createTextNode(para[i]));
-        scr.appendChild(p);
-      }
-      
-      var textNodes = scr.childNodes;
-      
+      var nodeList = [];
       iterateNodes(data, function(d){
-        if(d.transcript != currTransc)
-          return;
+        if(d.transcript != null || d.transcript != undefined)
+          if(d.transcript == currTransc) nodeList.push(d);
         
-        var el = scr.childNodes[d.el];
-        
-        var r = document.createRange();
-        console.log(r, el, d);
-        r.setStart(el, d.start);
-        r.setEnd(el, d.end);
-        
-        var sp = document.createElement("span");
-        sp.className = "highlightText";
-        
-        r.surroundContents(sp);
       });
+      
+      nodeList.sort(function(a, b){ return b.start - a.start; });
+      
+      scr.appendChild(document.createTextNode(transcripts[currTransc]));
+            
+      var el = scr.firstChild;
+      
+      var r = new Range();
+            
+      for(var i = 0; i < nodeList.length; i++){
+        r.setStart(el, nodeList[i].start);
+        r.setEnd(el, nodeList[i].end);
+                        
+        r.surroundContents(document.createElement('span'));
+      }
       
     }
     
@@ -658,18 +653,28 @@
         text = document.selection.createRange();
       }
       
-      var selection = {
-        name: text.toString(),
-        children: [],
-        transcript: currTransc,
-        el: countPrev(text.startContainer),
-        start: text.startOffset,
-        end: text.endOffset
+      var str = text.toString();
+      
+      var txt = document.querySelector('#script').textContent;
+      var indStart = 0;
+      var matches = 0;
+      while(indStart = txt.indexOf(str, indStart) > -1)
+        matches++;
+      
+      if(matches < 2){
+        var selection = {
+          name: text.toString(),
+          children: [],
+          transcript: currTransc,
+          el: countPrev(text.startContainer),
+          start: text.startOffset,
+          end: text.endOffset
+        }
+        if(highlighted != null)
+          addNode(d3.select(highlighted).data()[0], selection);
+        else
+          addNode(data, selection);
       }
-      if(highlighted != null)
-        addNode(d3.select(highlighted).data()[0], selection);
-      else
-        addNode(data, selection);
     }
     
     function addNode(parent, node){
