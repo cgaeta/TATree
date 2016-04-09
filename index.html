@@ -6,25 +6,82 @@
   <script type="text/javascript" src="js/d3.js"></script>
   <style>
     #view {
-      margin: 20px 0 20px 5%;
-      width: 40%;
+      margin: 20px 0 20px;
+      width: 45%;
       height: 640px;
       overflow: auto;
       display: inline-block;
+			vertical-align: top;
     }
+		
+		#zoomCtls {
+			position: absolute;
+			top: 5px;
+			left: 40%;
+			width: 50px;
+			height: 25px;
+		}
+		
+		#zoomCtls button {
+			width: 20px;
+			height: 25px;
+			line-height: 25px;
+			box-sizing: border-box;
+		}
+		
+		#view.expand {
+			width: 85%;
+		}
     
     #script {
-      margin: 20px 5% 20px 0;
+      margin: 20px 0 20px;
       width: 40%;
       max-height: 640px;
       overflow-y: scroll;
       display: inline-block;
       white-space: pre-wrap;
+			vertical-align: top;
     }
+		
+		#network {
+			width: 85%;
+			height: 480px;
+			overflow: auto;
+			display: inline-block;
+		}
+		
+		.drag_line {
+			stroke-width: 5px;
+			stroke: #888;
+		}
+		
+		.drag_line_hidden { stroke-width: 0px; }
+		
+		#script {
+			display: none;
+		}
+		
+		#controls {
+			margin: 20px 0 20px;
+			width: 15%;
+			display: inline-block;
+			vertical-align: top;
+			position: fixed;
+			right: 0px;
+			top: 10px;
+		}
     
     #script span {
       background-color: rgba(255, 255, 0, 7);
     }
+		
+		#encodeSelection {
+			width: 95%;
+			height: 40px;
+			box-sizing: border-box;
+			line-height: 40px;
+			margin: 10px auto;
+		}
     
     #json {
       white-space: pre;
@@ -35,6 +92,7 @@
     .link {
       fill: none;
       stroke: #888888;
+			stroke-width: 3px;
     }
     
     .highlightText {
@@ -71,27 +129,41 @@
   </style>
 </head>
 <body>
-  <label>JSON file to analyze:</label>
-  <input type="file" id="fileField" />
-  <label>Add transcript</label>
-  <input type="file" id="transcriptField" />
-  <button id="showTranscript">Show next transcript</button>
-  <button id="encodeSelection">Encode selection</button>
-  <form>
-    <label>Add node</label>
-    <input type="text" id="nodeField" />
-    <input type="submit" value="Insert" id="insertNode" />
-  </form>
   <div id="view"></div>
+	<div id="zoomCtls">
+		<button id="zoomIn">+</button>
+		<button id="zoomOut">-</button>
+	</div>
   <div id="script"></div>
-  <label>Click below to copy JSON</label>
-  <p id="json"></p>
+	<div id="network"></div>
+	<div id="controls">
+		<label>JSON file to analyze:</label>
+		<input type="file" id="fileField" />
+		<label>Add transcript</label>
+		<input type="file" id="transcriptField" />
+		<label>Show Transcript</label>
+		<select id="showTranscript"></select>
+		<button id="toggleTranscript">Toggle Transcript</button>
+		<form>
+			<label>Add node</label>
+			<input type="text" id="nodeField" />
+			<input type="submit" value="Insert" id="insertNode" />
+		</form>
+		<button id="encodeSelection">Encode selection</button>
+		<label>Node Context</label>
+		<p id="nodeContext"></p>
+	</div>
+	<div id="copy">
+  	<label>Click below to copy JSON</label>
+  	<p id="json"></p>
+	</div>
   <script type="text/javascript">
     
     var data = null;
     var transcripts = [];
     
     var currTransc = 0;
+		var colors = [];
     
     var z = 0;
     var total = 0;
@@ -173,9 +245,9 @@
       })
       .separation(function(a, b){
         if(!(hasChildren(a) || hasChildren(b)))
-          return a.parent === b.parent ? 1 : 2;
-        else
           return a.parent === b.parent ? 3 : 4;
+        else
+          return a.parent === b.parent ? 5 : 7;
       });
     
     var link = d3.svg.diagonal()
@@ -190,7 +262,70 @@
     .append("svg:g")
     .attr("class", "container")
     .attr("transform", "translate(60, 0)");
+		
+		var tempCat = localStorage.categories != undefined ? JSON.parse(localStorage.categories) : undefined;
+		var categories = tempCat ? tempCat.nodes : [];
+		var tempFLinks = tempCat ? tempCat.links: [];
+		var fLinks = [];
+		
+		for(var i = 0; i < tempFLinks.length; i++){
+			var l = tempFLinks[i]
+			
+			if(!l.source) continue;
+			
+			var s = categories[l.source.index];
+			var t = categories[l.target.index];
+			fLinks.push({source: s, target: t});
+			
+			if(s.weight)
+				s.weight++;
+			else
+				s.weight = 1;
+			
+			if(t.weight)
+				t.weight++;
+			else
+				t.weight = 1;
+		}
+		
+		var force = d3.layout.force()
+			.size([3200, 3200])
+			.nodes(categories)
+			.links(fLinks)
+			.linkDistance(100)
+			.charge(-600)
+			.on("tick", tick);
+		
+		var forceRoot = d3.select("#network")
+			.append("svg:svg")
+			.attr("width", 3200)
+			.attr("height", 3200)
+			.append("svg:g")
+			.attr("class", "container")
+			.attr("transform", "translate(100, 100)")
+			.on("mousemove", mousemove);
+		
+		var forceNodes = force.nodes(),
+				forceLinks = force.links(),
+				forceNode = forceRoot.selectAll('.node'),
+				forceLink = forceRoot.selectAll('.link');
+		
+		// mouse event vars
+		var selected_node = null,
+			selected_link = null,
+			mousedown_link = null,
+			mousedown_node = null,
+			mouseup_node = null;
+		
+		var drag_line = forceRoot.append("line")
+			.attr("class", "drag_line")
+			.attr("x1", 0)
+			.attr("y1", 0)
+			.attr("x2", 0)
+			.attr("y2", 0);
     
+		forceDraw();
+		
     /*
       draw node hierarchy
     */
@@ -199,8 +334,11 @@
       if(source == null && localStorage.data){
         source = JSON.parse(localStorage.getItem("data"));
       
-        if(source.transcripts)
+        if(source.transcripts){
           transcripts = source.transcripts;
+					
+					resetSelect();
+				}
         
         if(source.data)
           source = source.data;
@@ -208,16 +346,22 @@
       else if(source == null) return;
       
       data = source;
+			
+			var hueStep = 360 / transcripts.length;
+			colors = [];
+			for(var i = 0; i < transcripts.length; i++){
+				colors.push(i * hueStep);
+			}
       
       var h = 0;
       nodeDepths = [];
       depthCounts(data);
       total = countChildren(data);
       
-      var newHeight = d3.max(nodeDepths) * 40;
+      var newHeight = d3.max(nodeDepths) * 60;
       newHeight = Math.max(newHeight, 640);
       
-      var newWidth = Math.max(strLen * nodeDepths.length, 800);
+      var newWidth = Math.max(strLen * 3 * nodeDepths.length, 800);
       
       tree = tree.size([newHeight, newWidth]);
       
@@ -246,7 +390,7 @@
           return d._children ? "node collapsedParent" : "node";
         })
         .attr("transform", function(d){
-          return "translate("+(d.depth * 80)+","+d.x+")";
+          return "translate("+(d.depth * 100)+","+d.x+")";
         })
         .on('mousedown', function(d){
           startDrag(d);
@@ -254,15 +398,32 @@
         .on("mouseover", function(d){
           if(dragging && d !== dragging)
             selected = d;
+					if(d.transcript){
+						var str = transcripts[d.transcript];
+						var s = d.start > 80 ? d.start - 80 : 0;
+						var e = str.length > d.end + 80 ? d.end + 80 : str.length;
+						
+						var sub = str.substr(s, e-s);
+						nodeContext.textContent = sub;
+						
+					}
+					else if(d.name != undefined)
+						nodeContext.textContent = d.name;
         })
         .on("mouseout", function(d){
-          if(dragging && d !== dragging)
-              selected = null;
-        });
-      
+					if(dragging && d !== dragging)
+						selected = null;
+					nodeContext.textContent = "";
+				});
+			
       nodeGroup.append("svg:circle")
         .attr("class", "node-dot")
-        .attr("r", 5);
+        .attr("r", 5)
+				.attr("fill", function(d){
+					//console.log(d.transcript);
+					//if(d.transcript != undefined) console.log(colors[d.transcript]);
+					return "hsl("+ (d.transcript != undefined ? colors[d.transcript] : 0)+", 100%, "+(d.transcript != undefined ? 50 : 0) + "%)"
+				});
       
       nodeGroup.append("svg:text")
         .attr("text-anchor", function(d){
@@ -371,6 +532,136 @@
       localStorage.setItem("data", JSON.stringify(saveData));
       
     }
+		
+		function forceDraw(){
+
+			forceLink = forceLink.data(forceLinks);
+
+			forceNode = forceNode.data(forceNodes);
+
+			//var forceGroup.enter().append("svg:g")
+			forceNode.enter().append("svg:g");
+			
+			//forceNode.enter().insert("circle")
+			forceNode.append("circle")
+				.attr("class", "node")
+				.attr("r", 8)
+				.on("mousedown", function(d){
+
+					mousedown_node = d;
+					if (mousedown_node == selected_node)
+						selected_node = null;
+					else selected_node = mousedown_node;
+						selected_link = null; 
+
+					// reposition drag line
+					drag_line
+						//.attr("class", "link")
+						.attr("class", "drag_line")
+						.attr("x1", mousedown_node.x)
+						.attr("y1", mousedown_node.y)
+						.attr("x2", mousedown_node.x)
+						.attr("y2", mousedown_node.y);
+
+					forceDraw();
+				})
+				.on("mouseup", function(d){
+					finishLine();
+					if(mousedown_node){
+						mouseup_node = d;
+						if (mouseup_node == mousedown_node){
+							mousedown_node = null;
+							mouseup_node = null;
+							mousedown_link = null;
+							
+							return;
+						}
+						
+						// add link
+						var link = {
+							source: mousedown_node,
+							target: mouseup_node
+						};
+						forceLinks.push(link);
+
+						// select new link
+						selected_link = link;
+						selected_node = null;
+
+						forceDraw();
+					}
+				})
+				.transition()
+					.duration(750)
+					.ease("elastic")
+					.attr("r", 9);
+			
+			forceNode.append("svg:text")
+				.attr("text-anchor", function(d){
+					return "start";
+				})
+				.attr("dx", function(d){
+					return 20;
+				})
+				.attr("dy", function(d){
+					return 3;
+				})
+				.text(function(d){
+					return d.name;
+				});
+
+			forceNode.exit().transition()
+				.attr("r", 0)
+				.remove();
+
+			forceNode.classed("node_selected", function(d){
+				return d === selected_node;
+			});
+			
+			forceLink.enter().append("line")
+				.attr("class", "link")
+				.on("mousedown", function(d){
+					mousedown_link = d;
+					if (mousedown_link == selected_link)
+						selected_link = null;
+					else selected_link = mousedown_link;
+						selected_node = null;
+					forceDraw();
+				});
+
+			forceLink.exit().remove();
+
+			forceLink.classed("link_selected", function(d){
+				return d === selected_link;
+			});
+
+			if (d3.event) {
+				// prevent browser's default behavior
+				d3.event.preventDefault();
+			}
+
+			localStorage.categories = JSON.stringify({ nodes: categories, links: forceLinks });
+			
+			force.start();
+
+		}
+		
+		function resetSelect(){
+			var selectEl = document.querySelector('#showTranscript');
+			while(selectEl.firstChild)
+				selectEl.removeChild(selectEl.firstChild);
+					
+			for(var i = 0; i < transcripts.length; i++){
+				var opt = document.createElement('option');
+				opt.appendChild(document.createTextNode(i))
+				selectEl.appendChild(opt);
+				
+				if(i + 2 > transcripts.length)
+					opt.setAttribute("selected", "selected");
+			}
+			
+			showTranscript(selectEl.value);
+		}
     
     /*
       return whether the node has children
@@ -398,7 +689,7 @@
     function iterateNodes(d, fn){
       
       var c = d.children || d._children;
-            
+			
       if(c != null || c != undefined)
         for(var i = 0; i < c.length; i++)
           iterateNodes(c[i], fn);
@@ -547,6 +838,54 @@
       var result = dragging === d;
       return result;
     }
+		
+		function tick() {
+			forceLink
+				.attr("x1", function(d){ return d.source.x; })
+				.attr("y1", function(d){ return d.source.y; })
+				.attr("x2", function(d){ return d.target.x; })
+				.attr("y2", function(d){ return d.target.y; });
+
+			forceNode
+				//.attr("cx", function(d){ return d.x; })
+				//.attr("cy", function(d){ return d.y; });
+				.attr("transform", function(d){
+					if(!isNaN(d.x))
+						return "translate("+d.x+","+d.y+")";
+					else
+						return "translate(0,0)";
+				});
+		}
+		
+		function drawLine(){
+			// update drag line
+			drag_line
+				.attr("x1", mousedown_node.x)
+				.attr("y1", mousedown_node.y)
+				.attr("x2", d3.svg.mouse(this)[0])
+				.attr("y2", d3.svg.mouse(this)[1]);
+			
+		}
+		
+		function finishLine(){
+			if (mousedown_node) {
+				// hide drag line
+					drag_line
+						.attr("class", "drag_line_hidden");
+			}
+		}
+		
+		function mousemove(){
+		if (!mousedown_node) return;
+
+				// update drag line
+				drag_line
+					.attr("x1", mousedown_node.x)
+					.attr("y1", mousedown_node.y)
+					//console.log(this, d3.mouse(this));
+					.attr("x2", d3.mouse(this)[0])
+					.attr("y2", d3.mouse(this)[1]);
+		}
     
     function getJSON(d){
       var ob = {
@@ -582,7 +921,9 @@
       if(FileReader && files && files.length){
         var fr = new FileReader();
         fr.onload = function(){
-          data = JSON.parse(fr.result);
+          var ld = JSON.parse(fr.result);
+					data = ld.data;
+					transcripts = ld.transcripts;
           update(data);
           t.value = "";
         }
@@ -602,28 +943,35 @@
           //update(data);
           t.value = "";
           update(data || {name:"codes", children:{}});
+					
+					resetSelect();
         }
         fr.readAsText(files[0]);
       }
     }
     
-    function showTranscript(){
+    function showTranscript(ind){
       if(transcripts.length < 1)
         return;
       
-      currTransc++;
+			if(ind == undefined || ind == null){
+      	currTransc++;
             
-      if(currTransc > transcripts.length - 1)
-        currTransc = 0;
+      	if(currTransc > transcripts.length - 1)
+        	currTransc = 0;
+			}
+			else
+				currTransc = parseInt(ind);
                   
       var scr = document.querySelector("#script");
       while(scr.firstChild)
         scr.removeChild(scr.firstChild);
       
       var nodeList = [];
-      iterateNodes(data, function(d){
-        if(d.transcript != null || d.transcript != undefined)
-          if(d.transcript == currTransc) nodeList.push(d);
+			if(data)
+				iterateNodes(data, function(d){
+        	if(d.transcript != null || d.transcript != undefined)
+          	if(d.transcript == currTransc) nodeList.push(d);
         
       });
       
@@ -658,8 +1006,11 @@
       var txt = document.querySelector('#script').textContent;
       var indStart = 0;
       var matches = 0;
-      while(indStart = txt.indexOf(str, indStart) > -1)
+			
+			indStart = txt.indexOf(str, 0);
+      while(txt.indexOf(str, indStart+1) > -1){
         matches++;
+			}
       
       if(matches < 2){
         var selection = {
@@ -667,31 +1018,71 @@
           children: [],
           transcript: currTransc,
           el: countPrev(text.startContainer),
-          start: text.startOffset,
-          end: text.endOffset
+          start: indStart,
+          end: indStart + str.length
         }
         if(highlighted != null)
           addNode(d3.select(highlighted).data()[0], selection);
         else
           addNode(data, selection);
+				
+				text.surroundContents(document.createElement('span'));
       }
     }
     
     function addNode(parent, node){
       if(parent){
-        if(!parent.hasOwnProperty('children'))
+        if(!parent.hasOwnProperty('children') && !parent.hasOwnProperty('_children'))
           parent.children = [];
-              
-        parent.children.push(node);
+        
+				if(parent._children)
+					hideChildren(parent);
+				parent.children.push(node);
+
       }
       else
         parent = node;
       
       update(data);
+			
+			forceNodes.push({name: node.name});
+			forceDraw();
     }
     
     (function(){
-      document.getElementById("fileField").addEventListener("change", function(e){
+     
+			document.querySelector("#zoomIn")
+				.addEventListener("click", function(e){
+				
+				var svg = document.querySelector("#view")
+					.firstChild
+					.firstChild;
+				var tr = svg.getAttribute("transform");
+				
+				if(tr == "translate(60, 0) scale(1)" || tr == "translate(60, 0)")
+					svg
+						.setAttribute("transform", "translate(120, 0) scale(2)");
+				else
+					svg
+						.setAttribute("transform", "translate(60, 0) scale(1)");
+			});
+			
+			document.querySelector("#zoomOut")
+				.addEventListener("click", function(e){
+				
+				var svg = document.querySelector("#view")
+					.firstChild
+					.firstChild;
+				var tr = svg.getAttribute("transform");
+				
+				if(tr == "translate(60, 0) scale(1)" || tr == "translate(60, 0)")
+					svg
+						.setAttribute("transform", "translate(30, 0) scale(.5)");
+				else
+					svg.setAttribute("transform", "translate(60, 0) scale(1)");
+				
+			});
+			document.getElementById("fileField").addEventListener("change", function(e){
         uploadJSON(e);
       });
       
@@ -699,10 +1090,18 @@
         uploadTranscript(e);
       });
       
-      document.getElementById("showTranscript").addEventListener("click", function(e){
+     /* document.getElementById("showTranscript").addEventListener("click", function(e){
         showTranscript();
       });
-      
+			*/
+			document.getElementById('showTranscript').addEventListener("change", function(e){
+				showTranscript(this.value);
+			});
+			
+			document.getElementById('toggleTranscript').addEventListener("click", function(e){
+				document.getElementById('view').classList.toggle('expand');
+				document.getElementById('script').classList.toggle('hidden');
+			});
       document.getElementById("encodeSelection").addEventListener("click", function(e){
         encodeSelection();
       });
@@ -724,7 +1123,6 @@
             addNode(data, o);
         }
       });
-      
       document.getElementById("json").addEventListener("click", function(){
         var range = document.createRange();
         range.selectNodeContents(this);
@@ -732,6 +1130,8 @@
         selection.removeAllRanges();
         selection.addRange(range);
       });
+			
+			var nodeContext = document.getElementById('nodeContext');
       
       update();
     })();
